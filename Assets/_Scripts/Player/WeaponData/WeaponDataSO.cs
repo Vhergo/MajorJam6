@@ -1,39 +1,29 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class WeaponDataSO : ScriptableObject
+public abstract class WeaponDataSO : ScriptableObject
 {
-    public new string name;
-    public WeaponType weaponType;
-    public FiringType firingType;
+    public WeaponCategory weaponCategory;
 
-    public float damage;
-    public float bulletSpeed;
-    public float fireRate;
-/*    public int burstCount = 1;
-    public int burstRate = 0;*/
-
+    public string weaponName;
+    public DamageRange damage = new DamageRange();
     public float knockback;
-    public float selfKnockback;
 
-    public GameObject bulletPrefab;
-    public RuntimeAnimatorController muzzleFlash;
+    public GameObject weaponPrefab;
+    public RuntimeAnimatorController weaponStance;
 
-    public enum WeaponType
-    {
-        Pistol,
-        Shotgun,
-        SMG,
-        Rifle,
-        Sniper,
-        Railgun
-    }
+    public abstract WeaponLogic AddWeaponLogicComponent(GameObject weaponHolder);
+    public abstract void InitializeWeaponData(WeaponLogic weaponLogic, KeyCode fireInput);
+}
 
-    public enum FiringType
-    {
-        SemiAuto,
-        FullAuto,
-        Charge
-    }
+[System.Serializable]
+public class DamageRange
+{
+    public float minDamage;
+    public float maxDamage;
+}
+
+public enum WeaponCategory
+{
+    Melee,
+    Range
 }

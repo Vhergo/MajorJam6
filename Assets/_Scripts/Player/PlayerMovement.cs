@@ -327,7 +327,8 @@ public class PlayerMovement : MonoBehaviour
         bool fasterThanTargetSpeed = Mathf.Abs(rb.velocity.x) > Mathf.Abs(targetSpeed);
         bool checkDirection = Mathf.Sign(rb.velocity.x) == Mathf.Sign(targetSpeed);
         bool targetSpeedAboveZero = Mathf.Abs(targetSpeed) > 0.01f;
-        if (conserveMomentum && fasterThanTargetSpeed && checkDirection && targetSpeedAboveZero) accelRate = 0;
+        if (conserveMomentum && fasterThanTargetSpeed && checkDirection && targetSpeedAboveZero) 
+            accelRate = 0;
     }
 
     void WallInteractions(float horizontal, float vertical) {

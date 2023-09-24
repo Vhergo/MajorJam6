@@ -20,7 +20,7 @@ public class RotateWithMouse : MonoBehaviour
     void Start() {
         player = GameObject.Find("Player").transform;
         playerSprite = GameObject.Find("PlayerSprite").GetComponent<SpriteRenderer>();
-        weaponSprite = GameObject.Find("Weapon").GetComponent<SpriteRenderer>();
+        weaponSprite = GameObject.Find("WeaponSprite").GetComponent<SpriteRenderer>();
     }
 
     void Update() {

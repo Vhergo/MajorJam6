@@ -1,0 +1,60 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: acab98f93d8283340a63f8225bb2604c, type: 3}
+  m_Name: BasicRailgun
+  m_EditorClassIdentifier: 
+  weaponCategory: 1
+  weaponName: Basic Railgun
+  damage:
+    minDamage: 20
+    maxDamage: 80
+  knockback: 5
+  weaponPrefab: {fileID: 0}
+  weaponStance: {fileID: 0}
+  rangeWeaponType: 5
+  firingType: 2
+  ammoUsageType: 0
+  standardAmmoConfig:
+    infiniteAmmo: 0
+    maxAmmoCapacity: 32
+    maxClipCapacity: 8
+    ammoConsumption: 4
+    reloadTime: 2
+    autoReload: 0
+  overheatAmmoConfig:
+    infiniteAmmo: 0
+    maxEnergy: 0
+    heatLimit: 0
+    heatRate: 0
+    lockoutTime: 0
+    cooldownDelay: 0
+    cooldownRate: 0
+  bulletSpeed: 60
+  fireRate: 2
+  bulletSpread: 0
+  bulletsPerShot: 1
+  symmetricalSpread: 0
+  burstEnabled: 0
+  burstCount: 0
+  burstRate: 0
+  chargeTime: 1
+  chargeAutoFire: 0
+  chargeAutoFireDelay: 0
+  swapTime: 0
+  selfKnockback: 5
+  healAmount: 0
+  bulletPrefab: {fileID: 5544525658203566090, guid: 1a8ac03dfac5e1c4ca03bca57d45a99f, type: 3}
+  firePosition: {fileID: 1899318999066889877, guid: 3711ca54534bc5b45844436f5d0cfb16, type: 3}
+  handlePosition: {fileID: 0}
+  muzzleFlashPrefab: {fileID: 2307970267182205487, guid: 74550069a2cdff64abaaebacee78358f, type: 3}
+  muzzleFlashPosition: {fileID: 3464241779173131815, guid: 74550069a2cdff64abaaebacee78358f, type: 3}
+  muzzleFlashAnimation: {fileID: 9100000, guid: bf3379549106ac844a51579e6f1814c7, type: 2}

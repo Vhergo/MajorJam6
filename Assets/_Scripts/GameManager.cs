@@ -8,8 +8,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private float timeScaleValue;
 
     void Update() {
-        if (Input.GetKeyDown(KeyCode.R)) {
-            // Restarts
+        if (Input.GetKeyDown(KeyCode.O)) {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
 
