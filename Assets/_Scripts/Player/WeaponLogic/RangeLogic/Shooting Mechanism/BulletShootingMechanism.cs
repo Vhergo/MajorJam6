@@ -6,26 +6,33 @@ public class BulletShootingMechanism : IShootingMechanism
 {
     private readonly RangeWeaponDataSO weaponData;
     private RangeWeaponLogic weaponLogic;
+    private Coroutine burstCoroutine;
 
     public BulletShootingMechanism(RangeWeaponDataSO data, RangeWeaponLogic logic) {
         weaponData = data;
         weaponLogic = logic;
     }
 
-    public void ShootBullet(RangeWeaponLogic weaponLogic) {
+    public void StopShoot() {
+        CoroutineHandler.Instance.StopManagedCoroutine(burstCoroutine);
+    }
+
+    // Arguments aren't needed for the bullet mechanism
+    // Need to include them because of the interface
+    public void Shoot(IAmmoUsage ammoUsage, KeyCode fireKey) {
         if (!weaponLogic.ammoUsage.CanShoot()) return;
 
         if (weaponData.burstEnabled) {
-            CoroutineHandler.Instance.StartManagedCoroutine(ShootBurst());
+            burstCoroutine = CoroutineHandler.Instance.StartManagedCoroutine(ShootBurst());
         }else {
-            Shoot();
+            ShootBullet();
         }
 
         weaponLogic.fireRateTimer = 0;
         weaponLogic.ammoUsage.OnShoot();
     }
 
-    private void Shoot() {
+    private void ShootBullet() {
         for (int i = 0; i < weaponLogic.bulletsPerShot; i++) {
             FireBullet(CalculateSpread(i));
         }
@@ -36,7 +43,7 @@ public class BulletShootingMechanism : IShootingMechanism
 
     private IEnumerator ShootBurst() {
         for (int i = 0; i < weaponLogic.burstCount; i++) {
-            Shoot();
+            ShootBullet();
             yield return new WaitForSeconds(weaponLogic.burstRate);
         }
     }

@@ -99,7 +99,7 @@ public class WeaponDataSOEditor : Editor
 
         EditorGUILayout.PropertyField(burstEnabled, new GUIContent("Enable Burst Fire", "If true, burst fire is enabled for this weapon"));
         if (burstEnabled.boolValue) {
-            EditorGUILayout.PropertyField(burstCount, new GUIContent("Burst Count", "The number of bullets in each burst"));
+            EditorGUILayout.PropertyField(burstCount, new GUIContent("Burst Count", "The number of bullets in each burst. Set the 'Ammo Consumption' to this value if burst is enabled"));
             EditorGUILayout.PropertyField(burstRate, new GUIContent("Burst Rate", "The rate at which the bullets in the burst are fired"));
         }
         EditorGUILayout.Separator();

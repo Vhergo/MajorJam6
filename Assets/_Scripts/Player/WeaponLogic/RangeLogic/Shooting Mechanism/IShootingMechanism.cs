@@ -3,6 +3,6 @@ using UnityEngine;
 
 public interface IShootingMechanism
 {
-    void ShootBullet(RangeWeaponLogic weaponLogic);
-    IEnumerator ShootBeam(IAmmoUsage ammoUsage, KeyCode fireKey);
+    void Shoot(IAmmoUsage ammoUsage, KeyCode fireKey);
+    void StopShoot();
 }

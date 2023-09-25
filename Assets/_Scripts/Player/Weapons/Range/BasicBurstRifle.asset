@@ -25,9 +25,9 @@ MonoBehaviour:
   ammoUsageType: 0
   standardAmmoConfig:
     infiniteAmmo: 0
-    maxAmmoCapacity: 0
-    maxClipCapacity: 0
-    ammoConsumption: 0
+    maxAmmoCapacity: 36
+    maxClipCapacity: 12
+    ammoConsumption: 3
     reloadTime: 0
     autoReload: 0
   overheatAmmoConfig:
@@ -43,12 +43,15 @@ MonoBehaviour:
   bulletSpread: 1
   bulletsPerShot: 1
   symmetricalSpread: 0
-  burstEnabled: 0
+  burstEnabled: 1
   burstCount: 3
   burstRate: 0.1
   chargeTime: 0
   chargeAutoFire: 0
   chargeAutoFireDelay: 0
+  beamRange: 0
+  activationDuration: 0
+  deactivationDuration: 0
   swapTime: 0
   selfKnockback: 6
   healAmount: 0

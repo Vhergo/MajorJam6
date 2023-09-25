@@ -1527,9 +1527,10 @@ MonoBehaviour:
     swapKey: 50
   - weapon: {fileID: 11400000, guid: c6a88c2ea3a39724dbb8aa60ce6f5614, type: 2}
     swapKey: 51
-  - weapon: {fileID: 11400000, guid: 829af8d32c1aa6f4ea92a30463c31bdb, type: 2}
+  - weapon: {fileID: 11400000, guid: 0d61094536134af448b7ba1471c174ee, type: 2}
     swapKey: 52
   fireKey: 316
+  weaponSwapDelay: 2
 --- !u!114 &492536329
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1733,7 +1734,7 @@ Camera:
   far clip plane: 1000
   field of view: 34
   orthographic: 1
-  orthographic size: 6
+  orthographic size: 9
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -1758,7 +1759,7 @@ Transform:
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 3.5, z: -10}
+  m_LocalPosition: {x: 0, y: 6.5, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1925,6 +1926,7 @@ GameObject:
   - component: {fileID: 586446250}
   - component: {fileID: 586446251}
   - component: {fileID: 586446252}
+  - component: {fileID: 586446253}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -2025,6 +2027,18 @@ MonoBehaviour:
     - enemyPrefab: {fileID: 0}
       spawnPoint: {fileID: 0}
       spawnCount: 0
+--- !u!114 &586446253
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 586446246}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b05850164780dec47ba7900546712db6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &610770715
 GameObject:
   m_ObjectHideFlags: 0
@@ -2968,6 +2982,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponsList: []
   fireKey: 316
+  weaponSwapDelay: 0
 --- !u!1 &868199541
 GameObject:
   m_ObjectHideFlags: 0
@@ -4806,7 +4821,7 @@ MonoBehaviour:
   m_Follow: {fileID: 61186577}
   m_Lens:
     FieldOfView: 34
-    OrthographicSize: 6
+    OrthographicSize: 9
     NearClipPlane: 0.3
     FarClipPlane: 1000
     Dutch: 0

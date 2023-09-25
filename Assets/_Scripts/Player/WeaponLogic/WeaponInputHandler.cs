@@ -89,8 +89,7 @@ public class WeaponInputHandler : MonoBehaviour
 
     protected void BeamFireInput(RangeWeaponLogic weaponLogic) {
         if (Input.GetKeyDown(weaponLogic.fireKey)) {
-            if (beamCoroutine != null) StopCoroutine(beamCoroutine);
-            beamCoroutine = StartCoroutine(weaponLogic.shootingMechanism.ShootBeam(weaponLogic.ammoUsage, weaponLogic.fireKey));
+            weaponLogic.shootingMechanism.Shoot(weaponLogic.ammoUsage, weaponLogic.fireKey);
         }
     }
 

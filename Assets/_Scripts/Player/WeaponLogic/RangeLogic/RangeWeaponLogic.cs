@@ -87,7 +87,7 @@ public class RangeWeaponLogic : WeaponLogic
     }
 
     public override void ActivateWeapon() {
-        shootingMechanism.ShootBullet(this);
+        shootingMechanism.Shoot(ammoUsage, fireKey);
     }
 
     #region HANDLE MUZZLE FLASH
