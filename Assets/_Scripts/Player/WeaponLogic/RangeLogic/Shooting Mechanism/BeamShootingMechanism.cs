@@ -26,6 +26,7 @@ public class BeamShootingMechanism : IShootingMechanism
         inputReleased = false;
 
         // Activation Logic Here
+        BeamActivation();
 
         yield return new WaitUntil(() => {
             inputReleased = Input.GetKeyUp(fireKey);
@@ -34,15 +35,30 @@ public class BeamShootingMechanism : IShootingMechanism
 
         if (inputReleased) {
             // Deactivation Logic Here
+            BeamDeactivation();
             yield break;
         }
 
         while (!Input.GetKeyUp(fireKey) && ammoUsage.CanShoot()) {
             // Maintain Logic Here
+            BeamMaintain();
         }
 
         // Deactivation Logic Here
+        BeamDeactivation();
         yield return new WaitForSeconds(weaponData.deactivationDuration);
         inputReleased = true;
+    }
+
+    private void BeamActivation() {
+
+    }
+
+    private void BeamMaintain() {
+
+    }
+
+    private void BeamDeactivation() {
+
     }
 }

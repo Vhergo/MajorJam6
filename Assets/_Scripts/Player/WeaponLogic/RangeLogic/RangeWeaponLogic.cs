@@ -25,6 +25,7 @@ public class RangeWeaponLogic : WeaponLogic
     public bool chargeAutoFire;
     public float chargeAutoFireDelay;
 
+    public LineRenderer beamRenderer;
     public float beamRange;
     public float activationDuration;
     public float deactivationDuration;
@@ -59,10 +60,12 @@ public class RangeWeaponLogic : WeaponLogic
         base.Awake();
         // fire point should be weapon specific
         firePoint = GameObject.FindGameObjectWithTag("FirePoint").transform;
+        beamRenderer = GetComponent<LineRenderer>();
     }
 
     private void Start() {
         fireRateTimer = fireRate;
+        InitializeLineRenderer();
     }
 
     private void Update() {
@@ -76,6 +79,14 @@ public class RangeWeaponLogic : WeaponLogic
             }
         }
         ammoUsage.OnUpdate();
+    }
+
+    private void InitializeLineRenderer() {
+        if (weaponData.firingType == RangeFiringType.Beam) {
+            beamRenderer.enabled = true;
+        }else {
+            beamRenderer.enabled = false;
+        }
     }
 
     public override void InitializeSavedData(IAmmoUsage cachedWeaponData) {
