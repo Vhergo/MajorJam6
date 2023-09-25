@@ -7,8 +7,8 @@ public class WeaponDataSOEditor : Editor
     // ADD TOOLTIPS HERE
     #region SERIALIZED PROPERTIES
     SerializedProperty weaponCategory;
-    SerializedProperty weaponType;
     SerializedProperty firingType;
+    SerializedProperty weaponType;
     SerializedProperty ammoUsageType;
 
     SerializedProperty weaponName;
@@ -78,8 +78,8 @@ public class WeaponDataSOEditor : Editor
     }
 
     void DisplayRangeWeaponFields() {
-        EditorGUILayout.PropertyField(weaponType, new GUIContent("Weapon Type", "Define the weapon type"));
         EditorGUILayout.PropertyField(firingType, new GUIContent("Firing Type", "Define the firing type"));
+        EditorGUILayout.PropertyField(weaponType, new GUIContent("Weapon Type", "Define the weapon type"));
         EditorGUILayout.PropertyField(ammoUsageType, new GUIContent("Ammo Usage Type", "Define how the weapon ammunition is used"));
         EditorGUILayout.Separator();
 
@@ -89,36 +89,59 @@ public class WeaponDataSOEditor : Editor
         DisplayAmmoConfigurationFields();
         EditorGUILayout.Separator();
 
-        EditorGUILayout.PropertyField(bulletSpeed, new GUIContent("Bullet Speed", "The speed of the fired bullet(s)"));
-        EditorGUILayout.PropertyField(fireRate, new GUIContent("Fire Rate", "The weapon's fire rate"));
-        EditorGUILayout.PropertyField(bulletSpread, new GUIContent("Bullet Spread", "The spread of the fired bullets"));
-        EditorGUILayout.PropertyField(bulletsPerShot, new GUIContent("Bullets Per Shot", "The number of bullets fired per shot"));
-        if (bulletsPerShot.intValue > 1)
-            EditorGUILayout.PropertyField(symmetricalSpread, new GUIContent("Symmetrical Spread", "If true, the bullet spread will be symmetrical"));
-        EditorGUILayout.Separator();
+        // BULLET MECHANISM
+        bool isBeamType = firingType.enumValueIndex == (int)RangeFiringType.Beam;
 
-        EditorGUILayout.PropertyField(burstEnabled, new GUIContent("Enable Burst Fire", "If true, burst fire is enabled for this weapon"));
-        if (burstEnabled.boolValue) {
-            EditorGUILayout.PropertyField(burstCount, new GUIContent("Burst Count", "The number of bullets in each burst. Set the 'Ammo Consumption' to this value if burst is enabled"));
-            EditorGUILayout.PropertyField(burstRate, new GUIContent("Burst Rate", "The rate at which the bullets in the burst are fired"));
-        }
-        EditorGUILayout.Separator();
+        GUIStyle thinHelpBox = new GUIStyle(EditorStyles.helpBox) {
+            padding = new RectOffset(3, 3, 3, 3),
+            contentOffset = new Vector2(2, -1),
+            fontStyle = FontStyle.Bold,
+        };
 
-        if (firingType.enumValueIndex == (int)RangeFiringType.Charge) {
-            EditorGUILayout.PropertyField(chargeTime, new GUIContent("Charge Time", "The maximum charge time for this weapon"));
-            EditorGUILayout.PropertyField(chargeAutoFire, new GUIContent("Charge Auto Fire", "If true, this weapon fires automatically once the max charge time is reached"));
-            if (chargeAutoFire.boolValue)
-                EditorGUILayout.PropertyField(chargeAutoFireDelay, new GUIContent("Charged Auto Fire Delay", "The delay before this weapon is Auto Fired"));
+
+        GUI.enabled = !isBeamType;
+        // Anything Encapsulated between this disable and enable call will be greyed out
+        GUI.enabled = true;
+
+        if (!isBeamType) {
+            // BULLET TYPES
+            EditorGUILayout.PropertyField(bulletSpeed, new GUIContent("Bullet Speed", "The speed of the fired bullet(s)"));
+            EditorGUILayout.PropertyField(fireRate, new GUIContent("Fire Rate", "The weapon's fire rate"));
+            EditorGUILayout.PropertyField(bulletSpread, new GUIContent("Bullet Spread", "The spread of the fired bullets"));
+            EditorGUILayout.PropertyField(bulletsPerShot, new GUIContent("Bullets Per Shot", "The number of bullets fired per shot"));
+            if (bulletsPerShot.intValue > 1)
+                EditorGUILayout.PropertyField(symmetricalSpread, new GUIContent("Symmetrical Spread", "If true, the bullet spread will be symmetrical"));
+            EditorGUILayout.Separator();
+
+            // BURST FIRE
+            EditorGUILayout.PropertyField(burstEnabled, new GUIContent("Enable Burst Fire", "If true, burst fire is enabled for this weapon"));
+            if (isBeamType)
+                EditorGUILayout.LabelField("Burst mode cannot be enabled for beam weapons", thinHelpBox);
+
+
+            if (burstEnabled.boolValue) {
+                EditorGUILayout.PropertyField(burstCount, new GUIContent("Burst Count", "The number of bullets in each burst. Set the 'Ammo Consumption' to this value if burst is enabled"));
+                EditorGUILayout.PropertyField(burstRate, new GUIContent("Burst Rate", "The rate at which the bullets in the burst are fired"));
+            }
+            EditorGUILayout.Separator();
+
+            // CHARGE TYPE
+            if (firingType.enumValueIndex == (int)RangeFiringType.Charge) {
+                EditorGUILayout.PropertyField(chargeTime, new GUIContent("Charge Time", "The maximum charge time for this weapon"));
+                EditorGUILayout.PropertyField(chargeAutoFire, new GUIContent("Charge Auto Fire", "If true, this weapon fires automatically once the max charge time is reached"));
+                if (chargeAutoFire.boolValue)
+                    EditorGUILayout.PropertyField(chargeAutoFireDelay, new GUIContent("Charged Auto Fire Delay", "The delay before this weapon is Auto Fired"));
+                EditorGUILayout.Separator();
+            }
+        }else {
+            // BEAM TYPE
+            if (firingType.enumValueIndex == (int)RangeFiringType.Beam) {
+                EditorGUILayout.PropertyField(beamRange, new GUIContent("Beam Range", "The maximum range of the beam"));
+                EditorGUILayout.PropertyField(activationDuration, new GUIContent("Activation Duration", "The duration of all beam activation logic and animations"));
+                EditorGUILayout.PropertyField(deactivationDuration, new GUIContent("Deactivation Duration", "The duration of all beam deactivation logic and animations"));
+            }
             EditorGUILayout.Separator();
         }
-
-        if (firingType.enumValueIndex == (int)RangeFiringType.Beam) {
-            EditorGUILayout.PropertyField(beamRange, new GUIContent("Beam Range", "The maximum range of the beam"));
-            EditorGUILayout.PropertyField(activationDuration, new GUIContent("Activation Duration", "The duration of all beam activation logic and animations"));
-            EditorGUILayout.PropertyField(deactivationDuration, new GUIContent("Deactivation Duration", "The duration of all beam deactivation logic and animations"));
-        }
-
-        EditorGUILayout.Separator();
 
         EditorGUILayout.PropertyField(selfKnockback, new GUIContent("Self Knockback", "The knockback force applied to self"));
         EditorGUILayout.PropertyField(healAmount, new GUIContent("Heal Amount", "The amount each fired bullet will heal for"));
@@ -178,8 +201,8 @@ public class WeaponDataSOEditor : Editor
         if (target is RangeWeaponDataSO) {
             RangeWeaponDataSO rangeWEaponData = (RangeWeaponDataSO)target;
 
-            weaponType = serializedObject.FindProperty("rangeWeaponType");
             firingType = serializedObject.FindProperty("firingType");
+            weaponType = serializedObject.FindProperty("rangeWeaponType");
             ammoUsageType = serializedObject.FindProperty("ammoUsageType");
 
             standardAmmoConfig = serializedObject.FindProperty("standardAmmoConfig");

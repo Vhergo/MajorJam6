@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 
+[RequireComponent(typeof(LineRenderer))] // Insure this gameObject has a LineRenderer component
 public class RangeWeaponLogic : WeaponLogic
 {
     #region (MUTABLE) SCRIPTABLE OBJECT VARIABLES
@@ -65,7 +66,7 @@ public class RangeWeaponLogic : WeaponLogic
 
     private void Start() {
         fireRateTimer = fireRate;
-        InitializeLineRenderer();
+        // InitializeLineRenderer();
     }
 
     private void Update() {
@@ -81,13 +82,13 @@ public class RangeWeaponLogic : WeaponLogic
         ammoUsage.OnUpdate();
     }
 
-    private void InitializeLineRenderer() {
-        if (weaponData.firingType == RangeFiringType.Beam) {
-            beamRenderer.enabled = true;
-        }else {
-            beamRenderer.enabled = false;
-        }
-    }
+    //private void InitializeLineRenderer() {
+    //    if (weaponData.firingType == RangeFiringType.Beam) {
+    //        beamRenderer.enabled = true;
+    //    }else {
+    //        beamRenderer.enabled = false;
+    //    }
+    //}
 
     public override void InitializeSavedData(IAmmoUsage cachedWeaponData) {
         ammoUsage = cachedWeaponData;

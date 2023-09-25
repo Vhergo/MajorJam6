@@ -8,8 +8,8 @@ public class RangeWeaponDataSO : WeaponDataSO
         weaponCategory = WeaponCategory.Range;
     }
 
-    public RangeWeaponType rangeWeaponType;
     public RangeFiringType firingType;
+    public RangeWeaponType rangeWeaponType;
     public IShootingMechanism shootingMechanism;
 
     public AmmoUsageType ammoUsageType;
@@ -112,9 +112,19 @@ public class RangeWeaponDataSO : WeaponDataSO
 
     public IShootingMechanism DefineShootingMechanism(RangeWeaponLogic rangeWeaponLogic) {
         if (firingType == RangeFiringType.Beam) {
-            return new BeamShootingMechanism(this);
+            Debug.Log("THIST");
+            return new BeamShootingMechanism(this, rangeWeaponLogic);
         } else {
             return new BulletShootingMechanism(this, rangeWeaponLogic);
+        }
+    }
+
+    // OnValidate is called when the script is loaded or a value is changed in the inspector
+    // It is strictly an Editor Only method and will not be called during runtime
+    private void OnValidate() {
+        if (firingType == RangeFiringType.Beam) {
+            rangeWeaponType = RangeWeaponType.Laser;
+            burstEnabled = false;
         }
     }
 }
@@ -134,7 +144,7 @@ public enum RangeWeaponType
     Rifle,
     Sniper,
     Railgun,
-    Beam
+    Laser
 }
 
 public enum RangeFiringType

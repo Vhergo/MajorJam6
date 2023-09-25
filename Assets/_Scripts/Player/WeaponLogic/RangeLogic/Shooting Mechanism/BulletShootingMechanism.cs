@@ -63,7 +63,7 @@ public class BulletShootingMechanism : IShootingMechanism
     }
 
     private Vector2 GetShootingDirection() {
-        return (weaponLogic.firePoint.position + weaponLogic.firePoint.right) - weaponLogic.firePoint.position;
+        return weaponLogic.firePoint.right;
     }
 
     private Quaternion CalculateSpread(int i) {
