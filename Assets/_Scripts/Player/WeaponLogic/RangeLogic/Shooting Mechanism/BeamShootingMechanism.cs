@@ -89,7 +89,6 @@ public class BeamShootingMechanism : IShootingMechanism
     }
 
     private IEnumerator BeamDeactivationCoroutines() {
-        Debug.Log("Deactivate");
         Vector2 endPoint = Vector2.zero;
         float startTime = Time.time - ((1 - beamProgress) * weaponLogic.deactivationDuration);
 
@@ -107,25 +106,11 @@ public class BeamShootingMechanism : IShootingMechanism
 
     private Vector2 RaycastTargetPoint(float range) {
         RaycastHit2D hit = Physics2D.Raycast(GetBeamStartPoint(), weaponLogic.firePoint.right, range, layerMask);
-        Debug.DrawRay(GetBeamStartPoint(), weaponLogic.firePoint.right * range, Color.red, 1f);
         if (hit.collider != null) {
-            DrawCrosshair(hit.point);
             return hit.point;
         }else {
-            DrawCrosshair(GetBeamStartPoint() + weaponLogic.firePoint.right * range);
             return GetBeamStartPoint() + weaponLogic.firePoint.right * range;
         }
-    }
-
-    private void DrawCrosshair(Vector2 point) {
-        float crosshairSize = 1f;
-        Vector2 verticalStart = point + Vector2.up * crosshairSize;
-        Vector2 verticalEnd = point - Vector2.up * crosshairSize;
-        Vector2 horizontalStart = point + Vector2.right * crosshairSize;
-        Vector2 horizontalEnd = point - Vector2.right * crosshairSize;
-
-        Debug.DrawLine(verticalStart, verticalEnd, Color.green);
-        Debug.DrawLine(horizontalStart, horizontalEnd, Color.green);
     }
 
     private int LayerExclusion() {
