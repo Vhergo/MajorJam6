@@ -3,6 +3,6 @@ using UnityEngine;
 
 public interface IShootingMechanism
 {
-    void Shoot(IAmmoUsage ammoUsage, KeyCode fireKey);
+    void Shoot();
     void StopShoot();
 }

@@ -4,12 +4,10 @@ using UnityEngine;
 
 public class BulletShootingMechanism : IShootingMechanism
 {
-    private readonly RangeWeaponDataSO weaponData;
     private RangeWeaponLogic weaponLogic;
     private Coroutine burstCoroutine;
 
-    public BulletShootingMechanism(RangeWeaponDataSO data, RangeWeaponLogic logic) {
-        weaponData = data;
+    public BulletShootingMechanism(RangeWeaponLogic logic) {
         weaponLogic = logic;
     }
 
@@ -17,12 +15,10 @@ public class BulletShootingMechanism : IShootingMechanism
         CoroutineHandler.Instance.StopManagedCoroutine(burstCoroutine);
     }
 
-    // Arguments aren't needed for the bullet mechanism
-    // Need to include them because of the interface
-    public void Shoot(IAmmoUsage ammoUsage, KeyCode fireKey) {
+    public void Shoot() {
         if (!weaponLogic.ammoUsage.CanShoot()) return;
 
-        if (weaponData.burstEnabled) {
+        if (weaponLogic.burstEnabled) {
             burstCoroutine = CoroutineHandler.Instance.StartManagedCoroutine(ShootBurst());
         }else {
             ShootBullet();

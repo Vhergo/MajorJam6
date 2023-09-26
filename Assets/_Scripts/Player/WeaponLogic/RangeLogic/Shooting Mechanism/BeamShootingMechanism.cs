@@ -4,34 +4,27 @@ using UnityEngine;
 
 public class BeamShootingMechanism : IShootingMechanism
 {
-    private readonly RangeWeaponDataSO weaponData;
     private RangeWeaponLogic weaponLogic;
     private bool inputReleased;
 
     private Coroutine beamCoroutine;
     private Coroutine activationCoroutine;
-    private Coroutine deactivationCoroutine;
+    public Coroutine deactivationCoroutine;
 
-    public BeamShootingMechanism(RangeWeaponDataSO data, RangeWeaponLogic logic) {
-        weaponData = data;
+    private float beamProgress;
+
+    public BeamShootingMechanism(RangeWeaponLogic logic) {
         weaponLogic = logic;
         inputReleased = true;
     }
 
-    public void Shoot(IAmmoUsage ammoUsage, KeyCode fireKey) {
+    public void Shoot() {
         if (inputReleased)
-            beamCoroutine = CoroutineHandler.Instance.StartManagedCoroutine(HandleBeam(ammoUsage, fireKey));
+            beamCoroutine = CoroutineHandler.Instance.StartManagedCoroutine(HandleBeam());
     }
 
-    public void StopShoot() {
-        weaponLogic.beamRenderer.enabled = false;
-
-        if (beamCoroutine != null) CoroutineHandler.Instance.StopManagedCoroutine(beamCoroutine);
-        if (activationCoroutine != null) CoroutineHandler.Instance.StopManagedCoroutine(activationCoroutine);
-        if (deactivationCoroutine != null) CoroutineHandler.Instance.StopManagedCoroutine(deactivationCoroutine);
-    }
-
-    private IEnumerator HandleBeam(IAmmoUsage ammoUsage, KeyCode fireKey) {
+    private IEnumerator HandleBeam() {
+        Debug.Log("Input Key: " + weaponLogic.fireKey);
         float startTime = Time.time;
         inputReleased = false;
 
@@ -39,8 +32,8 @@ public class BeamShootingMechanism : IShootingMechanism
         activationCoroutine = CoroutineHandler.Instance.StartManagedCoroutine(BeamActivation());
 
         yield return new WaitUntil(() => {
-            inputReleased = Input.GetKeyUp(fireKey);
-            return (Time.time - startTime >= weaponData.activationDuration || inputReleased);
+            inputReleased = Input.GetKeyUp(weaponLogic.fireKey);
+            return (Time.time - startTime >= weaponLogic.activationDuration || inputReleased);
         });
 
         if (inputReleased) {
@@ -50,7 +43,7 @@ public class BeamShootingMechanism : IShootingMechanism
             yield break;
         }
 
-        while (!Input.GetKeyUp(fireKey) && ammoUsage.CanShoot()) {
+        while (!Input.GetKeyUp(weaponLogic.fireKey) && weaponLogic.ammoUsage.CanShoot()) {
             // Maintain Logic Here
             BeamMaintain();
             yield return null;
@@ -65,13 +58,14 @@ public class BeamShootingMechanism : IShootingMechanism
         weaponLogic.beamRenderer.enabled = true;
 
         Vector2 endPoint;
-        float startTime = Time.time;
-        float progress = 0;
+        float startTime = Time.time - (beamProgress * weaponLogic.activationDuration);
 
-        while (progress < 1) {
+        while (beamProgress < 1) {
+            if (!Input.GetKey(weaponLogic.fireKey)) yield break;
+
             float elapsedTime = Time.time - startTime;
-            progress = elapsedTime / weaponData.activationDuration;
-            endPoint = RaycastTargetPoint(weaponLogic.beamRange * progress);
+            beamProgress = elapsedTime / weaponLogic.activationDuration;
+            endPoint = RaycastTargetPoint(weaponLogic.beamRange * beamProgress);
             UpdateBeamEndPosition(endPoint);
 
             yield return null;
@@ -84,15 +78,18 @@ public class BeamShootingMechanism : IShootingMechanism
     }
 
     private IEnumerator BeamDeactivation() {
+        Debug.Log("Deactivate");
         Vector2 endPoint = Vector2.zero;
+        float startTime = Time.time - ((1 - beamProgress) * weaponLogic.deactivationDuration);
 
-        float startTime = Time.time;
-        float progress = 0;
-
-        while (progress < 1) {
+        while (beamProgress > 0) {
+            if (Input.GetKeyDown(weaponLogic.fireKey)) {
+                BeamReactivation();
+                yield break;
+            }   
             float elapsedTime = Time.time - startTime;
-            progress = elapsedTime / weaponData.deactivationDuration;
-            endPoint = RaycastTargetPoint(weaponLogic.beamRange * (1 - progress));
+            beamProgress = 1 - (elapsedTime / weaponLogic.deactivationDuration);
+            endPoint = RaycastTargetPoint(weaponLogic.beamRange * (beamProgress));
             UpdateBeamEndPosition(endPoint);
 
             yield return null;
@@ -101,17 +98,20 @@ public class BeamShootingMechanism : IShootingMechanism
         weaponLogic.beamRenderer.enabled = false;
     }
 
+    private void BeamReactivation() {
+        Debug.Log("Reactivate");
+        StopShoot();
+        beamCoroutine = CoroutineHandler.Instance.StartManagedCoroutine(HandleBeam());
+    }
+
     private Vector2 RaycastTargetPoint(float range) {
         RaycastHit2D hit = Physics2D.Raycast(GetBeamStartPoint(), weaponLogic.firePoint.right, range, LayerExclusion());
-        // Debug.DrawRay(GetBeamStartPoint(), weaponLogic.firePoint.right * range, Color.red, 1f);
+        Debug.DrawRay(GetBeamStartPoint(), weaponLogic.firePoint.right * range, Color.red, 1f);
         if (hit.collider != null) {
             DrawCrosshair(hit.point);
-            Debug.Log("Hit: " + hit.point);
-            Debug.Log("The Raycast hit " + hit.collider.gameObject.name);
             return hit.point;
         }else {
             DrawCrosshair(GetBeamStartPoint() + weaponLogic.firePoint.right * range);
-            Debug.Log("NO hit: " + GetBeamStartPoint() + weaponLogic.firePoint.right * range);
             return GetBeamStartPoint() + weaponLogic.firePoint.right * range;
         }
     }
@@ -141,5 +141,27 @@ public class BeamShootingMechanism : IShootingMechanism
     private void UpdateBeamEndPosition(Vector3 endPoint) {
         weaponLogic.beamRenderer.SetPosition(0, GetBeamStartPoint());
         weaponLogic.beamRenderer.SetPosition(1, endPoint);
+    }
+
+    public void StopShoot() {
+        Debug.Log("Stop all active coroutines");
+        StopBeamCoroutine();
+        StopActivationCoroutine();
+        StopDeactivationCoroutine();
+    }
+
+    public void StopBeamCoroutine() {
+        if (beamCoroutine != null) CoroutineHandler.Instance.StopManagedCoroutine(beamCoroutine);
+        weaponLogic.beamRenderer.enabled = false;
+    }
+
+    public void StopActivationCoroutine() {
+        if (activationCoroutine != null) CoroutineHandler.Instance.StopManagedCoroutine(activationCoroutine);
+        weaponLogic.beamRenderer.enabled = false;
+    }
+
+    public void StopDeactivationCoroutine() {
+        if (deactivationCoroutine != null) CoroutineHandler.Instance.StopManagedCoroutine(deactivationCoroutine);
+        weaponLogic.beamRenderer.enabled = true;
     }
 }

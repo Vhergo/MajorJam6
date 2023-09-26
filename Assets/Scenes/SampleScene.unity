@@ -1489,7 +1489,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7588480e3031474bb9ce49f7f6af84d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotationSpeed: 10
+  rotationSpeed: 25
   stopRotation: 0
   equipOffset: 0.1
   muzzleFlashSprite: {fileID: 466499891}
@@ -1596,8 +1596,8 @@ LineRenderer:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
-        time: 0.0032258066
-        value: 0.2740741
+        time: 0
+        value: 0.5037038
         inSlope: 0
         outSlope: 0
         tangentMode: 0

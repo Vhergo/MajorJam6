@@ -89,7 +89,7 @@ public class WeaponInputHandler : MonoBehaviour
 
     protected void BeamFireInput(RangeWeaponLogic weaponLogic) {
         if (Input.GetKeyDown(weaponLogic.fireKey)) {
-            weaponLogic.shootingMechanism.Shoot(weaponLogic.ammoUsage, weaponLogic.fireKey);
+            weaponLogic.ActivateWeapon();
         }
     }
 

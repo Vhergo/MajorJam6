@@ -113,9 +113,9 @@ public class RangeWeaponDataSO : WeaponDataSO
     public IShootingMechanism DefineShootingMechanism(RangeWeaponLogic rangeWeaponLogic) {
         if (firingType == RangeFiringType.Beam) {
             Debug.Log("THIST");
-            return new BeamShootingMechanism(this, rangeWeaponLogic);
+            return new BeamShootingMechanism(rangeWeaponLogic);
         } else {
-            return new BulletShootingMechanism(this, rangeWeaponLogic);
+            return new BulletShootingMechanism(rangeWeaponLogic);
         }
     }
 

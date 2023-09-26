@@ -4,7 +4,7 @@ using UnityEngine;
 [RequireComponent(typeof(LineRenderer))] // Insure this gameObject has a LineRenderer component
 public class RangeWeaponLogic : WeaponLogic
 {
-    #region (MUTABLE) SCRIPTABLE OBJECT VARIABLES
+    #region (IMMUTABLE) SCRIPTABLE OBJECT VARIABLES
     public RangeWeaponDataSO weaponData;
 
     // These two are only to display values temporarily
@@ -51,7 +51,7 @@ public class RangeWeaponLogic : WeaponLogic
     public RuntimeAnimatorController weaponStance;
     #endregion
 
-    #region (IMMUTABLE) VARIABLES
+    #region (MUTABLE) VARIABLES
     public float fireRateTimer;
     public float chargeTimer;
     public float finalDamage;
@@ -66,7 +66,6 @@ public class RangeWeaponLogic : WeaponLogic
 
     private void Start() {
         fireRateTimer = fireRate;
-        // InitializeLineRenderer();
     }
 
     private void Update() {
@@ -82,14 +81,6 @@ public class RangeWeaponLogic : WeaponLogic
         ammoUsage.OnUpdate();
     }
 
-    //private void InitializeLineRenderer() {
-    //    if (weaponData.firingType == RangeFiringType.Beam) {
-    //        beamRenderer.enabled = true;
-    //    }else {
-    //        beamRenderer.enabled = false;
-    //    }
-    //}
-
     public override void InitializeSavedData(IAmmoUsage cachedWeaponData) {
         ammoUsage = cachedWeaponData;
     }
@@ -99,7 +90,7 @@ public class RangeWeaponLogic : WeaponLogic
     }
 
     public override void ActivateWeapon() {
-        shootingMechanism.Shoot(ammoUsage, fireKey);
+        shootingMechanism.Shoot();
     }
 
     #region HANDLE MUZZLE FLASH
