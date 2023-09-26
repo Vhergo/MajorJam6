@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 5967565261986185827}
   - component: {fileID: 4482340223011480720}
   - component: {fileID: 6491099257484332479}
-  - component: {fileID: 7443947112184080373}
   m_Layer: 0
   m_Name: PlayerBullet
   m_TagString: PlayerBullet
@@ -141,7 +140,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5544525658203566090}
-  m_BodyType: 1
+  m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -172,113 +171,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbd3fba7a45239749b9b5123bea3697b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletTrajectory:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0.5001572
-      inSlope: -0.013628676
-      outSlope: -0.013628676
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0.13280651
-    - serializedVersion: 3
-      time: 0.2511144
-      value: 0.24967209
-      inSlope: 0.0033138322
-      outSlope: 0.0033138322
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 0.7488856
-      value: 0.75061077
-      inSlope: 0.00069970556
-      outSlope: 0.00069970556
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 0.50045216
-      inSlope: -0.0063199094
-      outSlope: -0.0063199094
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.15217088
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 1
-    m_RotationOrder: 4
   bounceLimit: 1
   bounceCounter: 0
   bulletImpactPrefab: {fileID: 3513060847731360964, guid: 8e9e548ea22b2f248930062daf92b092, type: 3}
   destroyDelay: 20
---- !u!114 &7443947112184080373
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5544525658203566090}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0cdf71b418f103e4c87a88ab9907bfc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bulletPath:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: -1.0372
-      outSlope: -1.0372
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 0.4415372
-      value: 0.5420376
-      inSlope: -3.3894765
-      outSlope: -3.3894765
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 0.51485884
-      value: 0.12104283
-      inSlope: 0.41900682
-      outSlope: 0.41900682
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 0.5860189
-      value: 0.58925956
-      inSlope: 3.7859693
-      outSlope: 3.7859693
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 10.157992
-      outSlope: 10.157992
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.20458761
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  speed: 5

@@ -47,7 +47,7 @@ public class BulletShootingMechanism : IShootingMechanism
     private void FireBullet(Quaternion spreadAngle) {
         GameObject bullet = Object.Instantiate(weaponLogic.bulletPrefab, weaponLogic.firePoint.position, spreadAngle);
         Rigidbody2D bulletRB = bullet.GetComponent<Rigidbody2D>();
-        bulletRB.velocity = GetShootingDirection() * weaponLogic.bulletSpeed;
+        bulletRB.velocity = bullet.transform.right * weaponLogic.bulletSpeed;
         SetBulletValues(bullet);
     }
 
@@ -56,10 +56,6 @@ public class BulletShootingMechanism : IShootingMechanism
         playerBullet.BulletDamage = weaponLogic.finalDamage;
         playerBullet.BulletSpeed = weaponLogic.bulletSpeed;
         playerBullet.KnockbackForce = weaponLogic.knockback;
-    }
-
-    private Vector2 GetShootingDirection() {
-        return weaponLogic.firePoint.right;
     }
 
     private Quaternion CalculateSpread(int i) {

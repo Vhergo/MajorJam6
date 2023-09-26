@@ -5,14 +5,6 @@ using UnityEngine;
 
 public class PlayerBullet : Bullet
 {
-    [Header("Bullet Trajectory")]
-    [SerializeField] private AnimationCurve bulletTrajectory;
-    //[SerializeField] private float patternFrequency = 1f;
-    //[SerializeField] private float patternMagnitude = 1f;
-
-    private Vector3 initialPosition;
-    private float launchTime;
-
     #region VARIABLES
     [Header("Ricochet")]
     [SerializeField] private int bounceLimit;
@@ -34,37 +26,14 @@ public class PlayerBullet : Bullet
         Player,
         None
     }
-#endregion
+    #endregion
 
     protected override void Start() {
         base.Start();
         bounceCounter = 0;
 
-        launchTime = Time.time;
-        initialPosition = transform.position;
-
         Destroy(gameObject, destroyDelay);
     }
-
-    //private void Update() {
-    //    BulletTravelTrajectory();
-    //}
-    //private void BulletTravelTrajectory() {
-    //    float timeSinceLaunch = Time.time - launchTime;
-    //    float curveValue = bulletTrajectory.Evaluate(timeSinceLaunch * patternFrequency) * patternMagnitude;
-
-    //    // Calculate the "straight line" position of the bullet
-    //    Vector3 targetPosition = initialPosition + transform.up * BulletSpeed * timeSinceLaunch;
-
-    //    // Calculate the offset using the animation curve
-    //    Vector3 offset = transform.right * curveValue;
-
-    //    // Calculate the final target position with the offset
-    //    targetPosition += offset;
-
-    //    // Use Vector3.Lerp to move towards the target position
-    //    transform.position = Vector3.Lerp(transform.position, targetPosition, Time.deltaTime * BulletSpeed);
-    //}
 
     void BulletBouce(Collider2D col) {
         RaycastHit2D hit = Physics2D.Raycast(transform.position, rb.velocity.normalized, 1f, LayerMask.GetMask("Wall"));
