@@ -26,11 +26,9 @@ public class Enemy : MonoBehaviour
         IsCrawler = false;
     }
 
-    // protected virtual void TakeDamage(float damageAmount) {
-    //     print("TOOK DAMAGE: " + damageAmount);
-    //     currentHealth -= damageAmount;
-    //     if (currentHealth <= 0) EnemyDeath();
-    // }
+    public virtual void TakeDamage(float damageAmount) {
+
+    }
 
     // protected virtual void EnemyDeath() {
     //     // Play Death animation

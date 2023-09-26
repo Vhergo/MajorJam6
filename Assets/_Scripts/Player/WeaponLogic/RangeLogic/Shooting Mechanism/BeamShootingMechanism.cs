@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using log4net.Util;
+using System.Collections;
 using System.Net;
 using UnityEngine;
 
@@ -14,6 +15,7 @@ public class BeamShootingMechanism : IShootingMechanism
     private float beamProgress;
     private LayerMask layerMask;
     private float fireRateTimer;
+    private Vector2 endPoint;
 
     public BeamShootingMechanism(RangeWeaponLogic logic) {
         weaponLogic = logic;
@@ -48,7 +50,7 @@ public class BeamShootingMechanism : IShootingMechanism
 
         while (!Input.GetKeyUp(weaponLogic.fireKey) && weaponLogic.ammoUsage.CanShoot()) {
             BeamMaintain();
-            ConsumeAmmo();
+            HandleBeamInteractions();
             yield return null;
         }
 
@@ -57,7 +59,6 @@ public class BeamShootingMechanism : IShootingMechanism
     }
 
     private IEnumerator BeamActivationCoroutines() {
-        Vector2 endPoint;
         float startTime = Time.time - (beamProgress * weaponLogic.activationDuration);
 
         while (beamProgress < 1) {
@@ -69,34 +70,54 @@ public class BeamShootingMechanism : IShootingMechanism
             float elapsedTime = Time.time - startTime;
             beamProgress = elapsedTime / weaponLogic.activationDuration;
             endPoint = RaycastTargetPoint(weaponLogic.beamRange * beamProgress);
-            UpdateBeamEndPosition(endPoint);
+            UpdateBeamEndPosition();
 
             yield return null;
         }
     }
 
     private void BeamMaintain() {
-        Vector2 endPoint = RaycastTargetPoint(weaponLogic.beamRange);
-        UpdateBeamEndPosition(endPoint);
+        endPoint = RaycastTargetPoint(weaponLogic.beamRange);
+        UpdateBeamEndPosition();
     }
 
-    private void ConsumeAmmo() {
+    private void HandleBeamInteractions() {
         fireRateTimer -= Time.deltaTime;
         if (fireRateTimer <= 0) {
-            weaponLogic.ammoUsage.OnShoot();
-            fireRateTimer = weaponLogic.fireRate;
+            ConsumeAmmo();
+            DealDamage();
         }
     }
 
+    private void ConsumeAmmo() {
+        weaponLogic.ammoUsage.OnShoot();
+        fireRateTimer = weaponLogic.fireRate;
+    }
+
+    private void DealDamage() {
+        Collider2D[] enemies = Physics2D.OverlapCircleAll(endPoint, weaponLogic.beamDetectionRadius);
+        foreach (Collider2D enemy in enemies) {
+            if (enemy.CompareTag("Enemy")) {
+                enemy.GetComponent<Enemy>().TakeDamage(weaponLogic.finalDamage);
+                ApplyKnockback(enemy.gameObject);
+            }
+        }
+    }
+
+    private void ApplyKnockback(GameObject enemy) {
+        Vector2 knockbackDirection = (enemy.transform.position - weaponLogic.transform.position).normalized;
+        enemy.GetComponent<Rigidbody2D>().AddForce(knockbackDirection * weaponLogic.knockback, ForceMode2D.Impulse);
+    }
+
     private IEnumerator BeamDeactivationCoroutines() {
-        Vector2 endPoint = Vector2.zero;
+        endPoint = Vector2.zero;
         float startTime = Time.time - ((1 - beamProgress) * weaponLogic.deactivationDuration);
 
         while (beamProgress > 0) { 
             float elapsedTime = Time.time - startTime;
             beamProgress = 1 - (elapsedTime / weaponLogic.deactivationDuration);
             endPoint = RaycastTargetPoint(weaponLogic.beamRange * (beamProgress));
-            UpdateBeamEndPosition(endPoint);
+            UpdateBeamEndPosition();
 
             yield return null;
         }
@@ -109,6 +130,12 @@ public class BeamShootingMechanism : IShootingMechanism
         if (hit.collider != null) {
             return hit.point;
         }else {
+            if (weaponLogic.limitRange) {
+                float distance = Vector2.Distance(GetBeamStartPoint(), Camera.main.ScreenToWorldPoint(Input.mousePosition));
+                if (distance < weaponLogic.beamRange)
+                    return Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            }
+
             return GetBeamStartPoint() + weaponLogic.firePoint.right * range;
         }
     }
@@ -124,7 +151,7 @@ public class BeamShootingMechanism : IShootingMechanism
         return weaponLogic.firePoint.position;
     }
 
-    private void UpdateBeamEndPosition(Vector3 endPoint) {
+    private void UpdateBeamEndPosition() {
         weaponLogic.beamRenderer.SetPosition(0, GetBeamStartPoint());
         weaponLogic.beamRenderer.SetPosition(1, endPoint);
     }

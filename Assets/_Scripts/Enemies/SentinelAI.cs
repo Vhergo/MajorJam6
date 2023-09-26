@@ -30,7 +30,7 @@ public class SentinelAI : Enemy
         Flip();
     }
 
-    void TakeDamage(float damageAmount) {
+    public override void TakeDamage(float damageAmount) {
         currentHealth -= damageAmount;
         if (currentHealth <= 0) {
             EnemyDeath();

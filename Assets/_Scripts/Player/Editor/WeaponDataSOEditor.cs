@@ -31,8 +31,10 @@ public class WeaponDataSOEditor : Editor
     SerializedProperty chargeAutoFireDelay;
 
     SerializedProperty beamRange;
+    SerializedProperty beamDetectionRadius;
     SerializedProperty activationDuration;
     SerializedProperty deactivationDuration;
+    SerializedProperty limitRange;
 
     SerializedProperty standardAmmoConfig;
     SerializedProperty overheatAmmoConfig;
@@ -138,8 +140,10 @@ public class WeaponDataSOEditor : Editor
             if (firingType.enumValueIndex == (int)RangeFiringType.Beam) {
                 EditorGUILayout.PropertyField(fireRate, new GUIContent("Fire Rate", "The weapon's fire rate"));
                 EditorGUILayout.PropertyField(beamRange, new GUIContent("Beam Range", "The maximum range of the beam"));
+                EditorGUILayout.PropertyField(beamDetectionRadius, new GUIContent("Beam Size", "The detection radius at the end of the beam"));
                 EditorGUILayout.PropertyField(activationDuration, new GUIContent("Activation Duration", "The duration of all beam activation logic and animations"));
                 EditorGUILayout.PropertyField(deactivationDuration, new GUIContent("Deactivation Duration", "The duration of all beam deactivation logic and animations"));
+                EditorGUILayout.PropertyField(limitRange, new GUIContent("Limit Range", "If true and mouse is within beam range, the beam will end at the mouse position. Otherwise, the beam will end at the maximum range"));
             }
             EditorGUILayout.Separator();
         }
@@ -230,8 +234,10 @@ public class WeaponDataSOEditor : Editor
             chargeAutoFireDelay = serializedObject.FindProperty("chargeAutoFireDelay");
 
             beamRange = serializedObject.FindProperty("beamRange");
+            beamDetectionRadius = serializedObject.FindProperty("beamDetectionRadius");
             activationDuration = serializedObject.FindProperty("activationDuration");
             deactivationDuration = serializedObject.FindProperty("deactivationDuration");
+            limitRange = serializedObject.FindProperty("limitRange");
 
             selfKnockback = serializedObject.FindProperty("selfKnockback");
             healAmount = serializedObject.FindProperty("healAmount");

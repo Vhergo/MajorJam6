@@ -32,8 +32,10 @@ public class RangeWeaponDataSO : WeaponDataSO
     public float chargeAutoFireDelay;
 
     public float beamRange;
+    public float beamDetectionRadius;
     public float activationDuration;
     public float deactivationDuration;
+    public bool limitRange;
 
     public float swapTime;
     public float selfKnockback;
@@ -73,8 +75,10 @@ public class RangeWeaponDataSO : WeaponDataSO
         rangeWeaponLogic.chargeAutoFireDelay = this.chargeAutoFireDelay;
 
         rangeWeaponLogic.beamRange = this.beamRange;
+        rangeWeaponLogic.beamDetectionRadius = this.beamDetectionRadius;
         rangeWeaponLogic.activationDuration = this.activationDuration;
         rangeWeaponLogic.deactivationDuration = this.deactivationDuration;
+        rangeWeaponLogic.limitRange = this.limitRange;
 
         rangeWeaponLogic.ammoUsageType = this.ammoUsageType;
         rangeWeaponLogic.ammoUsage = this.CreateAmmoData();
@@ -112,7 +116,6 @@ public class RangeWeaponDataSO : WeaponDataSO
 
     public IShootingMechanism DefineShootingMechanism(RangeWeaponLogic rangeWeaponLogic) {
         if (firingType == RangeFiringType.Beam) {
-            Debug.Log("THIST");
             return new BeamShootingMechanism(rangeWeaponLogic);
         } else {
             return new BulletShootingMechanism(rangeWeaponLogic);

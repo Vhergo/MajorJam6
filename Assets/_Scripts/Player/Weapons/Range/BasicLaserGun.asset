@@ -16,13 +16,13 @@ MonoBehaviour:
   weaponName: Basic Laser Gun
   damage:
     minDamage: 0
-    maxDamage: 10
-  knockback: 1
+    maxDamage: 3
+  knockback: 0.5
   weaponPrefab: {fileID: 0}
   weaponStance: {fileID: 0}
   firingType: 3
   rangeWeaponType: 6
-  ammoUsageType: 0
+  ammoUsageType: 2
   standardAmmoConfig:
     infiniteAmmo: 0
     maxAmmoCapacity: 120
@@ -50,8 +50,10 @@ MonoBehaviour:
   chargeAutoFire: 0
   chargeAutoFireDelay: 0
   beamRange: 8
+  beamDetectionRadius: 0.5
   activationDuration: 0.05
   deactivationDuration: 0.05
+  limitRange: 1
   swapTime: 0
   selfKnockback: 0
   healAmount: 0

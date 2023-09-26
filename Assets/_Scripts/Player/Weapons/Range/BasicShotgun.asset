@@ -42,7 +42,7 @@ MonoBehaviour:
   fireRate: 1
   bulletSpread: 60
   bulletsPerShot: 6
-  symmetricalSpread: 0
+  symmetricalSpread: 1
   burstEnabled: 0
   burstCount: 0
   burstRate: 0
@@ -50,6 +50,7 @@ MonoBehaviour:
   chargeAutoFire: 0
   chargeAutoFireDelay: 0
   beamRange: 0
+  beamSize: 0
   activationDuration: 0
   deactivationDuration: 0
   swapTime: 0

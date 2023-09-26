@@ -28,8 +28,10 @@ public class RangeWeaponLogic : WeaponLogic
 
     public LineRenderer beamRenderer;
     public float beamRange;
+    public float beamDetectionRadius;
     public float activationDuration;
     public float deactivationDuration;
+    public bool limitRange;
 
     public AmmoUsageType ammoUsageType;
     public IAmmoUsage ammoUsage;

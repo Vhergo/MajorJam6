@@ -20,9 +20,24 @@ MonoBehaviour:
   knockback: 5
   weaponPrefab: {fileID: 0}
   weaponStance: {fileID: 0}
+  firingType: 3
   rangeWeaponType: 6
-  firingType: 1
-  ammoUsageType: 1
+  ammoUsageType: 2
+  standardAmmoConfig:
+    infiniteAmmo: 0
+    maxAmmoCapacity: 0
+    maxClipCapacity: 0
+    ammoConsumption: 0
+    reloadTime: 0
+    autoReload: 0
+  overheatAmmoConfig:
+    infiniteAmmo: 0
+    maxEnergy: 0
+    heatLimit: 0
+    heatRate: 0
+    lockoutTime: 0
+    cooldownDelay: 0
+    cooldownRate: 0
   bulletSpeed: 50
   fireRate: 0.025
   bulletSpread: 0
@@ -34,43 +49,10 @@ MonoBehaviour:
   chargeTime: 0
   chargeAutoFire: 0
   chargeAutoFireDelay: 0
-  standardAmmo:
-    infiniteAmmo: 0
-    maxAmmoCapacity: 0
-    remainingAmmo: 0
-    maxClipCapacity: 0
-    currentAmmoInClip: 0
-    ammoConsumption: 0
-    reloadTime: 0
-    reloadTimer: 0
-    isReloading: 0
-    autoReload: 0
-  overheatAmmo:
-    infiniteAmmo: 0
-    maxEnergy: 50
-    currentEnergy: 0
-    heatLimit: 20
-    currentHeat: 0
-    heatRate: 1
-    lockoutTime: 1
-    lockoutTimer: 0
-    lockedOut: 0
-    cooldownDelay: 0.25
-    cooldownRate: 2
-    lastShootTime: 0
-  unlimitedAmmo:
-    infiniteAmmo: 0
-    maxEnergy: 0
-    currentEnergy: 0
-    heatLimit: 0
-    currentHeat: 0
-    heatRate: 0
-    lockoutTime: 0
-    lockoutTimer: 0
-    lockedOut: 0
-    cooldownDelay: 0
-    cooldownRate: 0
-    lastShootTime: 0
+  beamRange: 0
+  beamSize: 0
+  activationDuration: 0
+  deactivationDuration: 0
   swapTime: 0
   selfKnockback: 5
   healAmount: 0

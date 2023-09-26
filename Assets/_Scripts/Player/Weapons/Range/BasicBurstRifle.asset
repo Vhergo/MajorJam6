@@ -17,11 +17,11 @@ MonoBehaviour:
   damage:
     minDamage: 0
     maxDamage: 12
-  knockback: 15
+  knockback: 5
   weaponPrefab: {fileID: 0}
   weaponStance: {fileID: 0}
-  rangeWeaponType: 3
   firingType: 1
+  rangeWeaponType: 3
   ammoUsageType: 0
   standardAmmoConfig:
     infiniteAmmo: 0
@@ -50,6 +50,7 @@ MonoBehaviour:
   chargeAutoFire: 0
   chargeAutoFireDelay: 0
   beamRange: 0
+  beamSize: 0
   activationDuration: 0
   deactivationDuration: 0
   swapTime: 0

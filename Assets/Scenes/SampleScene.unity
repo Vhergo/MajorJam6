@@ -1489,7 +1489,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7588480e3031474bb9ce49f7f6af84d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotationSpeed: 25
+  rotationSpeed: 50
   stopRotation: 0
   equipOffset: 0.1
   muzzleFlashSprite: {fileID: 466499891}
@@ -1618,8 +1618,8 @@ LineRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 0.9433962, g: 0.39316902, b: 0.28034887, a: 1}
-      key1: {r: 0.9056604, g: 0.8170844, b: 0.63652545, a: 1}
+      key0: {r: 0.29169634, g: 0.7382474, b: 0.8962264, a: 1}
+      key1: {r: 0.63529414, g: 0.9030275, b: 0.90588236, a: 1}
       key2: {r: 0, g: 0, b: 0, a: 0.78431374}
       key3: {r: 0, g: 0, b: 0, a: 0}
       key4: {r: 0, g: 0, b: 0, a: 0}
@@ -16993,9 +16993,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: Juggernaut
       objectReference: {fileID: 0}
+    - target: {fileID: 2649508248436722272, guid: ed3a17dafecf9da4ebbc1c05aa01ddcb, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3089904871890852027, guid: ed3a17dafecf9da4ebbc1c05aa01ddcb, type: 3}
+      propertyPath: maxHealth
+      value: 1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 3089904871890852027, guid: ed3a17dafecf9da4ebbc1c05aa01ddcb, type: 3}
+      propertyPath: allowMovement
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6070569716521715843, guid: ed3a17dafecf9da4ebbc1c05aa01ddcb, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -3
+      value: -3.58
       objectReference: {fileID: 0}
     - target: {fileID: 6070569716521715843, guid: ed3a17dafecf9da4ebbc1c05aa01ddcb, type: 3}
       propertyPath: m_LocalPosition.y

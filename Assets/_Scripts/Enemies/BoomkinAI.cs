@@ -105,7 +105,7 @@ public class BoomkinAI : Enemy
         }
     }
 
-    void TakeDamage(float damageAmount) {
+    public override void TakeDamage(float damageAmount) {
         if (isDead) return;
 
         currentHealth -= damageAmount;
