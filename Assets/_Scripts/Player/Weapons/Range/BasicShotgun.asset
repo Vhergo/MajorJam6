@@ -20,8 +20,8 @@ MonoBehaviour:
   knockback: 20
   weaponPrefab: {fileID: 0}
   weaponStance: {fileID: 0}
-  rangeWeaponType: 1
   firingType: 0
+  rangeWeaponType: 1
   ammoUsageType: 0
   standardAmmoConfig:
     infiniteAmmo: 0
@@ -42,13 +42,16 @@ MonoBehaviour:
   fireRate: 1
   bulletSpread: 60
   bulletsPerShot: 6
-  symmetricalSpread: 1
+  symmetricalSpread: 0
   burstEnabled: 0
   burstCount: 0
   burstRate: 0
   chargeTime: 0
   chargeAutoFire: 0
   chargeAutoFireDelay: 0
+  beamRange: 0
+  activationDuration: 0
+  deactivationDuration: 0
   swapTime: 0
   selfKnockback: 20
   healAmount: 0

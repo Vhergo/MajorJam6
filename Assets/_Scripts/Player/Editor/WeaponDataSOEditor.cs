@@ -136,6 +136,7 @@ public class WeaponDataSOEditor : Editor
         }else {
             // BEAM TYPE
             if (firingType.enumValueIndex == (int)RangeFiringType.Beam) {
+                EditorGUILayout.PropertyField(fireRate, new GUIContent("Fire Rate", "The weapon's fire rate"));
                 EditorGUILayout.PropertyField(beamRange, new GUIContent("Beam Range", "The maximum range of the beam"));
                 EditorGUILayout.PropertyField(activationDuration, new GUIContent("Activation Duration", "The duration of all beam activation logic and animations"));
                 EditorGUILayout.PropertyField(deactivationDuration, new GUIContent("Deactivation Duration", "The duration of all beam deactivation logic and animations"));

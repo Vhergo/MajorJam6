@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-
-public interface IAmmoUsage
+﻿public interface IAmmoUsage
 {
     bool CanShoot();
     void OnShoot();

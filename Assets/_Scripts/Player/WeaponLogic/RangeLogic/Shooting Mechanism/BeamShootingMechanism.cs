@@ -13,6 +13,7 @@ public class BeamShootingMechanism : IShootingMechanism
 
     private float beamProgress;
     private LayerMask layerMask;
+    private float fireRateTimer;
 
     public BeamShootingMechanism(RangeWeaponLogic logic) {
         weaponLogic = logic;
@@ -22,7 +23,7 @@ public class BeamShootingMechanism : IShootingMechanism
     }
 
     public void Shoot() {
-        if (inputReleased) {
+        if (inputReleased && weaponLogic.ammoUsage.CanShoot()) {
             StopAllCoroutines();
             beamCoroutine = CoroutineHandler.Instance.StartManagedCoroutine(HandleBeam());
         }
@@ -47,6 +48,7 @@ public class BeamShootingMechanism : IShootingMechanism
 
         while (!Input.GetKeyUp(weaponLogic.fireKey) && weaponLogic.ammoUsage.CanShoot()) {
             BeamMaintain();
+            ConsumeAmmo();
             yield return null;
         }
 
@@ -54,7 +56,7 @@ public class BeamShootingMechanism : IShootingMechanism
         inputReleased = true;
     }
 
-    private IEnumerator BeamActivation() {
+    private IEnumerator BeamActivationCoroutines() {
         Vector2 endPoint;
         float startTime = Time.time - (beamProgress * weaponLogic.activationDuration);
 
@@ -78,7 +80,15 @@ public class BeamShootingMechanism : IShootingMechanism
         UpdateBeamEndPosition(endPoint);
     }
 
-    private IEnumerator BeamDeactivation() {
+    private void ConsumeAmmo() {
+        fireRateTimer -= Time.deltaTime;
+        if (fireRateTimer <= 0) {
+            weaponLogic.ammoUsage.OnShoot();
+            fireRateTimer = weaponLogic.fireRate;
+        }
+    }
+
+    private IEnumerator BeamDeactivationCoroutines() {
         Debug.Log("Deactivate");
         Vector2 endPoint = Vector2.zero;
         float startTime = Time.time - ((1 - beamProgress) * weaponLogic.deactivationDuration);
@@ -136,11 +146,10 @@ public class BeamShootingMechanism : IShootingMechanism
 
     public void StopShoot() {
         beamProgress = 0;
+        inputReleased = true;
         weaponLogic.beamRenderer.enabled = false;
 
-        StopBeamCoroutine();
-        StopActivationCoroutine();
-        StopDeactivationCoroutine();
+        StopAllCoroutines();
     }
 
     private void StopAllCoroutines() {
@@ -162,10 +171,10 @@ public class BeamShootingMechanism : IShootingMechanism
     }
 
     private void StartActivationCoroutine() {
-        activationCoroutine = CoroutineHandler.Instance.StartManagedCoroutine(BeamActivation());
+        activationCoroutine = CoroutineHandler.Instance.StartManagedCoroutine(BeamActivationCoroutines());
     }
 
     private void StartDeactivationCoroutine() {
-        deactivationCoroutine = CoroutineHandler.Instance.StartManagedCoroutine(BeamDeactivation());
+        deactivationCoroutine = CoroutineHandler.Instance.StartManagedCoroutine(BeamDeactivationCoroutines());
     }
 }

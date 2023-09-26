@@ -22,24 +22,24 @@ MonoBehaviour:
   weaponStance: {fileID: 0}
   firingType: 3
   rangeWeaponType: 6
-  ammoUsageType: 1
+  ammoUsageType: 0
   standardAmmoConfig:
     infiniteAmmo: 0
-    maxAmmoCapacity: 0
-    maxClipCapacity: 0
-    ammoConsumption: 0
-    reloadTime: 0
+    maxAmmoCapacity: 120
+    maxClipCapacity: 40
+    ammoConsumption: 1
+    reloadTime: 1.5
     autoReload: 0
   overheatAmmoConfig:
     infiniteAmmo: 0
-    maxEnergy: 200
-    heatLimit: 50
-    heatRate: 10
+    maxEnergy: 100
+    heatLimit: 20
+    heatRate: 1
     lockoutTime: 4
     cooldownDelay: 0.5
     cooldownRate: 10
   bulletSpeed: 0
-  fireRate: 1
+  fireRate: 0.1
   bulletSpread: 0
   bulletsPerShot: 0
   symmetricalSpread: 0
