@@ -80,6 +80,7 @@ public class WeaponManager : MonoBehaviour
         }
     }
 
+    // Generic version of RemoveWeaponLogic
     //void RemoveWeaponLogic<T>() where T : WeaponLogic {
     //    T currentLogic = GetComponent<T>();
     //    if (currentLogic != null) Destroy(currentLogic);

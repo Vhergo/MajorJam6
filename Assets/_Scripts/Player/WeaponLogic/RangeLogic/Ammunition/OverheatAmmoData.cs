@@ -12,6 +12,8 @@ public class OverheatAmmoData : IAmmoUsage
     public float lockoutTimer;
     public bool lockedOut;
 
+    float saveTimeAtSwap;
+
     [HideInInspector] public float lastShootTime;
 
     public OverheatAmmoData (OverheatAmmoConfig config) {
@@ -71,6 +73,15 @@ public class OverheatAmmoData : IAmmoUsage
             currentHeat -= config.cooldownRate * Time.deltaTime;
             if (currentHeat < 0) currentHeat = 0;
         }
+    }
+
+    public void SaveTimeAtWeaponSwap() {
+        saveTimeAtSwap = Time.time;
+    }
+
+    public void ApplyTimeAtWeaponSwap() {
+        float timePassed = Time.time - saveTimeAtSwap;
+        lockoutTimer -= timePassed;
     }
 
     private bool CanCooldown() {

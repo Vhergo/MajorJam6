@@ -14,25 +14,21 @@ public class UnlimitedAmmoData : IAmmoUsage
         return true;
     }
 
-    public void OnShoot() {
+    public void OnShoot() { }
 
-    }
-
-    public void StartReload() {
-
-    }
+    public void StartReload() { }
 
     public bool CanReload() {
         return false;
     }
 
-    public void OnUpdate() {
+    public void OnUpdate() { }
 
-    }
+    public void OnAmmoRefill(int refillAmount) { }
 
-    public void OnAmmoRefill(int refillAmount) {
+    public void SaveTimeAtWeaponSwap() { }
 
-    }
+    public void ApplyTimeAtWeaponSwap() { }
 
     public float GetAmmoRemainingInClip() {
         return 0;

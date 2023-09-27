@@ -86,9 +86,11 @@ public class RangeWeaponLogic : WeaponLogic
 
     public override void InitializeSavedData(IAmmoUsage cachedWeaponData) {
         ammoUsage = cachedWeaponData;
+        ammoUsage.ApplyTimeAtWeaponSwap();
     }
 
     public override IAmmoUsage GetMutableData() {
+        ammoUsage.SaveTimeAtWeaponSwap();
         return ammoUsage;
     }
 

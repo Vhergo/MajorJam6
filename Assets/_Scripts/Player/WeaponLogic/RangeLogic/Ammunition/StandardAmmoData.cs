@@ -12,6 +12,8 @@ public class StandardAmmoData : IAmmoUsage
     public float reloadTimer;
     public bool isReloading;
 
+    public float saveTimeAtSwap;
+
     public StandardAmmoData (StandardAmmoConfig config) {
         this.config = config;
         currentAmmoInClip = config.maxClipCapacity;
@@ -71,6 +73,15 @@ public class StandardAmmoData : IAmmoUsage
             reloadTimer = 0;
             Debug.Log("Stop Reloading");
         }
+    }
+
+    public void SaveTimeAtWeaponSwap() {
+        saveTimeAtSwap = Time.time;
+    }
+
+    public void ApplyTimeAtWeaponSwap() {
+        float timePassed = Time.time - saveTimeAtSwap;
+        reloadTimer -= timePassed;
     }
 
     public bool HasAmmoInClip() {
