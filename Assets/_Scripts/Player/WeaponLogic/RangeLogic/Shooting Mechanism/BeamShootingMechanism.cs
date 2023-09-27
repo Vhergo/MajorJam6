@@ -76,6 +76,22 @@ public class BeamShootingMechanism : IShootingMechanism
         }
     }
 
+    private IEnumerator BeamDeactivationCoroutines() {
+        endPoint = Vector2.zero;
+        float startTime = Time.time - ((1 - beamProgress) * weaponLogic.deactivationDuration);
+
+        while (beamProgress > 0) {
+            float elapsedTime = Time.time - startTime;
+            beamProgress = 1 - (elapsedTime / weaponLogic.deactivationDuration);
+            endPoint = RaycastTargetPoint(weaponLogic.beamRange * (beamProgress));
+            UpdateBeamEndPosition();
+
+            yield return null;
+        }
+
+        weaponLogic.beamRenderer.enabled = false;
+    }
+
     private void BeamMaintain() {
         endPoint = RaycastTargetPoint(weaponLogic.beamRange);
         UpdateBeamEndPosition();
@@ -96,10 +112,30 @@ public class BeamShootingMechanism : IShootingMechanism
 
     private void DealDamage() {
         Collider2D[] enemies = Physics2D.OverlapCircleAll(endPoint, weaponLogic.beamDetectionRadius);
-        foreach (Collider2D enemy in enemies) {
-            if (enemy.CompareTag("Enemy")) {
-                enemy.GetComponent<Enemy>().TakeDamage(weaponLogic.finalDamage);
-                ApplyKnockback(enemy.gameObject);
+        if (enemies.Length == 0) return;
+
+        if (weaponLogic.singleTarget) {
+            Collider2D nearestEnemy = null;
+            float nearestSquaredDistance = float.MaxValue;
+            foreach (Collider2D enemy in enemies) {
+                if ((!enemy.CompareTag("Enemy") || enemy.GetComponent<Enemy>() == null)) continue;
+                float squaredDistance = (endPoint - (Vector2)enemy.gameObject.transform.position).sqrMagnitude;
+                if (squaredDistance < nearestSquaredDistance) {
+                    nearestSquaredDistance = squaredDistance;
+                    nearestEnemy = enemy;
+                }
+            }
+
+            if (nearestEnemy != null) {
+                nearestEnemy.GetComponent<Enemy>().TakeDamage(weaponLogic.finalDamage);
+                ApplyKnockback(nearestEnemy.gameObject);
+            }
+        }else {
+            foreach (Collider2D enemy in enemies) {
+                if (enemy.CompareTag("Enemy") && enemy.GetComponent<Enemy>() != null) {
+                    enemy.GetComponent<Enemy>().TakeDamage(weaponLogic.finalDamage);
+                    ApplyKnockback(enemy.gameObject);
+                }
             }
         }
     }
@@ -109,33 +145,27 @@ public class BeamShootingMechanism : IShootingMechanism
         enemy.GetComponent<Rigidbody2D>().AddForce(knockbackDirection * weaponLogic.knockback, ForceMode2D.Impulse);
     }
 
-    private IEnumerator BeamDeactivationCoroutines() {
-        endPoint = Vector2.zero;
-        float startTime = Time.time - ((1 - beamProgress) * weaponLogic.deactivationDuration);
-
-        while (beamProgress > 0) { 
-            float elapsedTime = Time.time - startTime;
-            beamProgress = 1 - (elapsedTime / weaponLogic.deactivationDuration);
-            endPoint = RaycastTargetPoint(weaponLogic.beamRange * (beamProgress));
-            UpdateBeamEndPosition();
-
-            yield return null;
-        }
-
-        weaponLogic.beamRenderer.enabled = false;
-    }
-
     private Vector2 RaycastTargetPoint(float range) {
         RaycastHit2D hit = Physics2D.Raycast(GetBeamStartPoint(), weaponLogic.firePoint.right, range, layerMask);
+        Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         if (hit.collider != null) {
-            return hit.point;
-        }else {
             if (weaponLogic.limitRange) {
-                float distance = Vector2.Distance(GetBeamStartPoint(), Camera.main.ScreenToWorldPoint(Input.mousePosition));
-                if (distance < weaponLogic.beamRange)
-                    return Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                float squaredDistance = ((Vector2)GetBeamStartPoint() - mousePos).sqrMagnitude;
+                if (squaredDistance < (hit.distance * hit.distance)) {
+                    return mousePos;
+                }
+                return hit.point;
             }
-
+            return hit.point;
+        } else {
+            if (weaponLogic.limitRange) {
+                // Distance optimization
+                // float distance = Vector2.Distance(GetBeamStartPoint(), Camera.main.ScreenToWorldPoint(Input.mousePosition));
+                // Need to typecast both to Vector2 to use sqrMagnitude in a 2D context. Otherwise the Z axis will skew the results
+                float squaredDistance = ((Vector2)GetBeamStartPoint() - mousePos).sqrMagnitude;
+                if (squaredDistance < (weaponLogic.beamRange * weaponLogic.beamRange))
+                    return mousePos;
+            }
             return GetBeamStartPoint() + weaponLogic.firePoint.right * range;
         }
     }

@@ -50,10 +50,11 @@ MonoBehaviour:
   chargeAutoFire: 0
   chargeAutoFireDelay: 0
   beamRange: 8
-  beamDetectionRadius: 0.5
+  beamDetectionRadius: 0.1
   activationDuration: 0.05
   deactivationDuration: 0.05
   limitRange: 1
+  singleTarget: 0
   swapTime: 0
   selfKnockback: 0
   healAmount: 0

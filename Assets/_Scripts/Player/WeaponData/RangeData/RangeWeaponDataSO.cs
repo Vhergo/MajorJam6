@@ -36,6 +36,7 @@ public class RangeWeaponDataSO : WeaponDataSO
     public float activationDuration;
     public float deactivationDuration;
     public bool limitRange;
+    public bool singleTarget;
 
     public float swapTime;
     public float selfKnockback;
@@ -79,6 +80,7 @@ public class RangeWeaponDataSO : WeaponDataSO
         rangeWeaponLogic.activationDuration = this.activationDuration;
         rangeWeaponLogic.deactivationDuration = this.deactivationDuration;
         rangeWeaponLogic.limitRange = this.limitRange;
+        rangeWeaponLogic.singleTarget = this.singleTarget;
 
         rangeWeaponLogic.ammoUsageType = this.ammoUsageType;
         rangeWeaponLogic.ammoUsage = this.CreateAmmoData();

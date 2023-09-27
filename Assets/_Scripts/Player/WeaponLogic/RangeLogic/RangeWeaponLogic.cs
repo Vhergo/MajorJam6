@@ -32,6 +32,7 @@ public class RangeWeaponLogic : WeaponLogic
     public float activationDuration;
     public float deactivationDuration;
     public bool limitRange;
+    public bool singleTarget;
 
     public AmmoUsageType ammoUsageType;
     public IAmmoUsage ammoUsage;

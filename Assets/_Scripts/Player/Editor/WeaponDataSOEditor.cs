@@ -35,6 +35,7 @@ public class WeaponDataSOEditor : Editor
     SerializedProperty activationDuration;
     SerializedProperty deactivationDuration;
     SerializedProperty limitRange;
+    SerializedProperty singleTarget;
 
     SerializedProperty standardAmmoConfig;
     SerializedProperty overheatAmmoConfig;
@@ -144,6 +145,7 @@ public class WeaponDataSOEditor : Editor
                 EditorGUILayout.PropertyField(activationDuration, new GUIContent("Activation Duration", "The duration of all beam activation logic and animations"));
                 EditorGUILayout.PropertyField(deactivationDuration, new GUIContent("Deactivation Duration", "The duration of all beam deactivation logic and animations"));
                 EditorGUILayout.PropertyField(limitRange, new GUIContent("Limit Range", "If true and mouse is within beam range, the beam will end at the mouse position. Otherwise, the beam will end at the maximum range"));
+                EditorGUILayout.PropertyField(singleTarget, new GUIContent("Single Target", "If true, beam will only affect a single target at a time. Target priority will be based off of proximity to the cursor"));
             }
             EditorGUILayout.Separator();
         }
@@ -238,6 +240,7 @@ public class WeaponDataSOEditor : Editor
             activationDuration = serializedObject.FindProperty("activationDuration");
             deactivationDuration = serializedObject.FindProperty("deactivationDuration");
             limitRange = serializedObject.FindProperty("limitRange");
+            singleTarget = serializedObject.FindProperty("singleTarget");
 
             selfKnockback = serializedObject.FindProperty("selfKnockback");
             healAmount = serializedObject.FindProperty("healAmount");
