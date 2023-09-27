@@ -20,8 +20,8 @@ MonoBehaviour:
   knockback: 15
   weaponPrefab: {fileID: 0}
   weaponStance: {fileID: 0}
-  rangeWeaponType: 3
   firingType: 1
+  rangeWeaponType: 3
   ammoUsageType: 1
   standardAmmoConfig:
     infiniteAmmo: 0
@@ -35,7 +35,7 @@ MonoBehaviour:
     maxEnergy: 100
     heatLimit: 30
     heatRate: 0.8
-    lockoutTime: 4
+    lockoutTime: 6
     cooldownDelay: 0.5
     cooldownRate: 6
   bulletSpeed: 40
@@ -49,6 +49,12 @@ MonoBehaviour:
   chargeTime: 0
   chargeAutoFire: 0
   chargeAutoFireDelay: 0
+  beamRange: 0
+  beamDetectionRadius: 0
+  activationDuration: 0
+  deactivationDuration: 0
+  limitRange: 0
+  singleTarget: 0
   swapTime: 0
   selfKnockback: 6
   healAmount: 0

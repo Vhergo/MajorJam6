@@ -37,6 +37,8 @@ public class RotateWithMouse : MonoBehaviour
     }
 
     void SwitchHands() {
+        if (MySceneManager.Instance.gameState == GameState.Pause) return;
+
         if (Camera.main.ScreenToWorldPoint(Input.mousePosition).x >= player.position.x) {
             objectPosition = GetEquipPosition(equipOffset);
             weaponSprite.flipY = false;

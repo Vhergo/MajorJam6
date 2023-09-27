@@ -16,6 +16,8 @@ public class MySceneManager : MonoBehaviour
     [SerializeField] private KeyCode pauseKey = KeyCode.O;
     [SerializeField] private KeyCode restartKey = KeyCode.P;
 
+    public GameState gameState = GameState.Play;
+
     private void Awake() {
         if(Instance == null) {
             Instance = this;
@@ -64,10 +66,12 @@ public class MySceneManager : MonoBehaviour
             Time.timeScale = 1;
             GameUIManager.Instance.TurnOffSettings();
             isPaused = false;
+            gameState = GameState.Play;
         }else {
             Time.timeScale = 0;
             GameUIManager.Instance.TurnOnSettings();
             isPaused = true;
+            gameState = GameState.Pause;
         }
     }
 
@@ -99,4 +103,10 @@ public enum SceneEnum
 {
     MainMenuScene,
     GameScene
+}
+
+public enum GameState
+{
+    Play,
+    Pause
 }

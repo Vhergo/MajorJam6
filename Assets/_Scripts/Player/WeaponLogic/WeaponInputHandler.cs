@@ -23,6 +23,8 @@ public class WeaponInputHandler : MonoBehaviour
     }
 
     private void HandleInput() {
+        if (MySceneManager.Instance.gameState == GameState.Pause) return;
+
         if (currentWeaponLogic is RangeWeaponLogic rangeWeaponLogic) {
             switch (rangeWeaponLogic.weaponData.firingType) {
                 case RangeFiringType.SemiAuto:
