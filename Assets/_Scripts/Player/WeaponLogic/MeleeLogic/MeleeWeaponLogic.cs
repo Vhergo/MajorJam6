@@ -1,6 +1,4 @@
-﻿using Codice.CM.Common.Merge;
-using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class MeleeWeaponLogic : WeaponLogic
 {

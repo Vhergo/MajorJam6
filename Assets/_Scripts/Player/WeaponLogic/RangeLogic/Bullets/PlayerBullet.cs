@@ -1,6 +1,3 @@
-using Codice.Client.Commands.TransformerRule;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerBullet : Bullet

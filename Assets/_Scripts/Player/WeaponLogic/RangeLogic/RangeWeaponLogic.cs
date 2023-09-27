@@ -101,7 +101,7 @@ public class RangeWeaponLogic : WeaponLogic
         muzzleFlash = Instantiate(
             weaponData.muzzleFlashPrefab,
             firePoint.position,
-            Quaternion.identity,
+            firePoint.rotation,
             tempWeaponPosition);
 
         muzzleFlash.GetComponent<Animator>().runtimeAnimatorController = weaponData.muzzleFlashAnimation;

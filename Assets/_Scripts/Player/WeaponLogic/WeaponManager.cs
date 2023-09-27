@@ -60,6 +60,7 @@ public class WeaponManager : MonoBehaviour
         //RemoveWeaponLogic<WeaponLogic>();
 
         currentWeapon = weapon;
+
         currentWeaponData = weapon.weapon;
 
         currentWeaponLogic = currentWeaponData.AddWeaponLogicComponent(gameObject);
