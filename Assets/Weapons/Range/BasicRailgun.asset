@@ -56,7 +56,7 @@ MonoBehaviour:
   beamRotationSpeed: 0
   limitRange: 0
   singleTarget: 0
-  firingSound: {fileID: 8300000, guid: a6deac16c1ca330489646fe7c702c0fd, type: 3}
+  firingSound: {fileID: 8300000, guid: 81de421e23c0bd84a8c39b8b38b9b7ff, type: 3}
   reloadSound: {fileID: 8300000, guid: 548faf30820520e4fb6bd7eb4d028c08, type: 3}
   swapTime: 0
   selfKnockback: 5

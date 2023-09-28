@@ -11,6 +11,7 @@ public class SoundManager : MonoBehaviour
     [Header("Audio Sources")]
     [SerializeField] private AudioSource musicSource;
     [SerializeField] private AudioSource effectsSource;
+    [SerializeField] private AudioSource interfaceSource;
 
     [Header("SOUNDS")]
     [Header("Background Music")]
@@ -20,6 +21,7 @@ public class SoundManager : MonoBehaviour
     private Slider masterSlider;
     private Slider musicSlider;
     private Slider effectsSlider;
+    private Slider interfaceSlider;
 
     private GameObject settings;
     private GameObject sliders;
@@ -27,10 +29,12 @@ public class SoundManager : MonoBehaviour
 
     private Button toggleMusicButton;
     private Button toggleEffectsButton;
+    private Button toggleInterfaceButton;
 
     private float masterSliderValue;
     private float musicSliderValue;
     private float effectsSliderValue;
+    private float interfaceSliderValue;
     #endregion
 
     private void Awake() {
@@ -66,6 +70,11 @@ public class SoundManager : MonoBehaviour
         effectsSource.PlayOneShot(clip);
     }
 
+    public void PlayUISound(AudioClip clip) {
+        if (clip == null) return;
+        interfaceSource.PlayOneShot(clip);
+    }
+
     private void ChangeMasterVolume(float value) {
         AudioListener.volume = value;
         masterSliderValue = value;
@@ -81,12 +90,21 @@ public class SoundManager : MonoBehaviour
         effectsSliderValue = value;
     }
 
+    private void ChangeInterfaceVolume(float value) {
+        interfaceSource.volume = value;
+        interfaceSliderValue = value;
+    }
+
     public void ToggleMusic() {
         musicSource.mute = !musicSource.mute;
     }
 
     public void ToggleEffects() {
         effectsSource.mute = !effectsSource.mute;
+    }
+
+    public void ToggleInterface() {
+        interfaceSource.mute = !interfaceSource.mute;
     }
 
     // Waits until the loading screen is finished before playing music
@@ -134,6 +152,7 @@ public class SoundManager : MonoBehaviour
             masterSlider = sliders.transform.GetChild(0).GetComponent<Slider>();
             musicSlider = sliders.transform.GetChild(1).GetComponent<Slider>();
             effectsSlider = sliders.transform.GetChild(2).GetComponent<Slider>();
+            interfaceSlider = sliders.transform.GetChild(3).GetComponent<Slider>();
         }else {
             LogError("Sliders not properly referenced!");
         }
@@ -144,6 +163,7 @@ public class SoundManager : MonoBehaviour
         if (toggles != null) {
             toggleMusicButton = toggles.transform.GetChild(0).GetComponent<Button>();
             toggleEffectsButton = toggles.transform.GetChild(1).GetComponent<Button>();
+            toggleInterfaceButton = toggles.transform.GetChild(2).GetComponent<Button>();
         }else {
             LogError("Toggles not properly referenced!");
         }
@@ -154,6 +174,7 @@ public class SoundManager : MonoBehaviour
         ChangeMasterVolume(masterSlider.value);
         ChangeMusicVolume(musicSlider.value);
         ChangeEffectsVolume(effectsSlider.value);
+        ChangeInterfaceVolume(interfaceSlider.value);
     }
 
     // Update audio levels based of slider values changes
@@ -161,6 +182,7 @@ public class SoundManager : MonoBehaviour
         masterSlider.onValueChanged.AddListener(val => ChangeMasterVolume(val));
         musicSlider.onValueChanged.AddListener(val => ChangeMusicVolume(val));
         effectsSlider.onValueChanged.AddListener(val => ChangeEffectsVolume(val));
+        interfaceSlider.onValueChanged.AddListener(val => ChangeInterfaceVolume(val));
     }
 
     // Update UI Sliders with the persistent volume data
@@ -170,6 +192,7 @@ public class SoundManager : MonoBehaviour
             sliders.transform.GetChild(0).GetComponent<Slider>().value = masterSliderValue;
             sliders.transform.GetChild(1).GetComponent<Slider>().value = musicSliderValue;
             sliders.transform.GetChild(2).GetComponent<Slider>().value = effectsSliderValue;
+            sliders.transform.GetChild(3).GetComponent<Slider>().value = interfaceSliderValue;
         }else {
             LogError("Sliders not properly referenced!");
         }
@@ -179,6 +202,7 @@ public class SoundManager : MonoBehaviour
     private void SubscribeAudioToggleButtons() {
         toggleMusicButton.onClick.AddListener(ToggleMusic);
         toggleEffectsButton.onClick.AddListener(ToggleEffects);
+        toggleInterfaceButton.onClick.AddListener(ToggleInterface);
     }
 
     // Turn off the settings panel

@@ -9,18 +9,18 @@ public class PlaySoundOnUIInteraction : MonoBehaviour
 
     
     public void PlayOnSelect() {
-        SoundManager.Instance.PlaySound(selectSound);
+        SoundManager.Instance.PlayUISound(selectSound);
     }
 
     public void PlayOnHover() {
-        SoundManager.Instance.PlaySound(hoverSound);
+        SoundManager.Instance.PlayUISound(hoverSound);
     }
 
     public void PlayOnRelease() {
-        SoundManager.Instance.PlaySound(releaseSound);
+        SoundManager.Instance.PlayUISound(releaseSound);
     }
 
     public void PlayOnExit() {
-        SoundManager.Instance.PlaySound(hoverSound);
+        SoundManager.Instance.PlayUISound(hoverSound);
     }
 }
