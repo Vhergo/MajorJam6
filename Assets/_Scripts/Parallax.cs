@@ -1,45 +1,60 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Parallax : MonoBehaviour
 {
-    [SerializeField] private float parallaxControl;
-    [SerializeField] private ParallaxLayer[] layers;
+    public static Parallax Instance;
 
-    private Transform vCam;
-    private Vector3 lastCamPos;
+    [SerializeField] private BackgroundLayer[] backgroundLayers;
+    [SerializeField] private bool disableParallax;
 
-    void Start() {
-        vCam = GameObject.Find("Virtual Camera").transform;
-        lastCamPos = vCam.position;
-    }
+    private Transform player;
+    private Vector3 initialPlayerPosition;
 
-    void Update() {
-        AdjustParallaxLayers();
-        lastCamPos = vCam.position;
-    }
-
-    void AdjustParallaxLayers() {
-        Vector3 parallaxDelta = vCam.position - lastCamPos;
-        for (int i = 0; i < layers.Length; i++) {
-            ParallaxLayer layerData = layers[i];
-            float parallaxX = parallaxDelta.x * layerData.parallaxFactorX * parallaxControl;
-            float parallaxY = parallaxDelta.y * layerData.parallaxFactorY * parallaxControl;
-            
-            Vector3 newPosition = layerData.layer.position + new Vector3(parallaxX, parallaxY, 0f);
-            
-            layerData.layer.position = newPosition;
+    private void Awake() {
+        if (Instance == null) {
+            Instance = this;
+        } else {
+            Destroy(gameObject);
         }
+    }
+
+    private void Start() {
+        player = GameObject.FindGameObjectWithTag("Player").transform;
+        if (player != null) {
+            initialPlayerPosition = player.position;
+        }
+    }
+
+    private void Update() {
+        if (disableParallax || player == null) return;
+
+        foreach (BackgroundLayer layer in backgroundLayers) {
+            UpdateBackgroundLayer(layer);
+        }
+
+        initialPlayerPosition = player.position;
+    }
+
+    private void UpdateBackgroundLayer(BackgroundLayer layer) {
+        Vector3 playerOffset = player.position - initialPlayerPosition;
+
+        Vector2 offset = new Vector2(playerOffset.x * layer.scroll.x, playerOffset.y * layer.scroll.y);
+        layer.image.uvRect = new Rect(
+            layer.image.uvRect.position + offset * Time.deltaTime, 
+            layer.image.uvRect.size);
+    }
+
+    public void ToggleScrolling() {
+        disableParallax = !disableParallax;
     }
 }
 
 [System.Serializable]
-public class ParallaxLayer
+public class BackgroundLayer
 {
-    [Header("Prallax Layer")]
-    public Transform layer;
-    public float parallaxFactorX;
-    public float parallaxFactorY;
+    public string layerName;
+    public RawImage image;
+    public Vector2 scroll;
 }
 

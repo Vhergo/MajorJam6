@@ -16,6 +16,7 @@ public class MySceneManager : MonoBehaviour
     [SerializeField] private KeyCode pauseKey = KeyCode.O;
     [SerializeField] private KeyCode restartKey = KeyCode.P;
 
+    public SceneEnum currentScene = SceneEnum.MainMenuScene;
     public GameState gameState = GameState.Play;
 
     private void Awake() {
@@ -33,6 +34,7 @@ public class MySceneManager : MonoBehaviour
     }
 
     public void SwitchScene(SceneEnum scene, bool withLoadingScreen = false) {
+        currentScene = scene;
         if (withLoadingScreen) {
             StartCoroutine(LoadSceneWithLoadingScreen(scene));
         } else {
@@ -42,6 +44,7 @@ public class MySceneManager : MonoBehaviour
 
     private IEnumerator LoadSceneWithLoadingScreen(SceneEnum scene) {
         Time.timeScale = 0;
+        gameState = GameState.Pause;
         loadingScreen.SetActive(true);
 
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(scene.ToString());
@@ -53,6 +56,7 @@ public class MySceneManager : MonoBehaviour
 
         loadingScreen.SetActive(false);
         Time.timeScale = 1;
+        gameState = GameState.Play;
     }
 
     public void RestartScene() {
@@ -63,16 +67,24 @@ public class MySceneManager : MonoBehaviour
         if (SceneManager.GetActiveScene().name != "GameScene") return;
 
         if (isPaused) {
-            Time.timeScale = 1;
-            GameUIManager.Instance.TurnOffSettings();
-            isPaused = false;
-            gameState = GameState.Play;
+            UnpauseGame();
         }else {
-            Time.timeScale = 0;
-            GameUIManager.Instance.TurnOnSettings();
-            isPaused = true;
-            gameState = GameState.Pause;
+            PauseGame();
         }
+    }
+
+    public void PauseGame() {
+        Time.timeScale = 0;
+        GameUIManager.Instance.TurnOnSettings();
+        isPaused = true;
+        gameState = GameState.Pause;
+    }
+
+    public void UnpauseGame() {
+        Time.timeScale = 1;
+        GameUIManager.Instance.TurnOffSettings();
+        isPaused = false;
+        gameState = GameState.Play;
     }
 
     public void QuitGame() {

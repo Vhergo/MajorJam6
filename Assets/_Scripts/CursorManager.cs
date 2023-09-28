@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class CursorManager : MonoBehaviour
 {
@@ -8,6 +9,7 @@ public class CursorManager : MonoBehaviour
 
     public Texture2D cursor;
     public Texture2D cursorEnemy;
+    public Texture2D cursorUI;
     private Texture2D currentCursor;
     private Vector2 cursorHotspot;
 
@@ -26,12 +28,27 @@ public class CursorManager : MonoBehaviour
         UpdateCursor();
     }
 
+    void Update() {
+        if (MySceneManager.Instance.currentScene == SceneEnum.MainMenuScene) return;
+
+        if (EventSystem.current.IsPointerOverGameObject()) {
+            CursorUIDetection(true);
+        }else {
+            CursorUIDetection(false);
+        }
+    }
+
     void UpdateCursor() {
         Cursor.SetCursor(currentCursor, cursorHotspot, CursorMode.Auto);
     }
 
-    public void CursorEnemyDetection(bool onEnemy = false) {
+    public void CursorEnemyDetection(bool onEnemy) {
         currentCursor = onEnemy ? cursorEnemy : cursor;
+        UpdateCursor();
+    }
+
+    public void CursorUIDetection(bool onUI) {
+        currentCursor = onUI ? cursorUI : cursor;
         UpdateCursor();
     }
 }

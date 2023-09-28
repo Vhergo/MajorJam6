@@ -710,6 +710,8 @@ MonoBehaviour:
   loadingScreenDuration: 1
   pauseKey: 112
   restartKey: 111
+  currentScene: 0
+  gameState: 0
 --- !u!4 &1835935575
 Transform:
   m_ObjectHideFlags: 0
@@ -736,6 +738,7 @@ GameObject:
   - component: {fileID: 1838337457}
   - component: {fileID: 1838337456}
   - component: {fileID: 1838337458}
+  - component: {fileID: 1838337459}
   m_Layer: 0
   m_Name: UIManager
   m_TagString: Untagged
@@ -790,6 +793,21 @@ MonoBehaviour:
   hoverSound: {fileID: 8300000, guid: 82d792800e714044f9e938bf2343de2d, type: 3}
   releaseSound: {fileID: 0}
   exitSound: {fileID: 0}
+--- !u!114 &1838337459
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1838337455}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ed7ba0649939724e884da009d1240f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cursor: {fileID: 2800000, guid: 89b074c09bd45304fa24ccb81c23bdde, type: 3}
+  cursorEnemy: {fileID: 0}
+  cursorUI: {fileID: 0}
 --- !u!1001 &6625029000809375651
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -841,6 +859,12 @@ PrefabInstance:
     - target: {fileID: 4531281781463187124, guid: 36f71769598f0d44da80c197a515b50e, type: 3}
       propertyPath: m_Name
       value: MainMenuCanvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 4680632896956124297, guid: 36f71769598f0d44da80c197a515b50e, type: 3}
+      propertyPath: m_text
+      value: 'Version - 1.0
+
+'
       objectReference: {fileID: 0}
     - target: {fileID: 5481369281165745690, guid: 36f71769598f0d44da80c197a515b50e, type: 3}
       propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target

@@ -16,6 +16,9 @@ TagManager:
   - HierarchyDivider
   - FirePoint
   - Weapon
+  - Settings
+  - Sliders
+  - Audio Toggles
   layers:
   - Default
   - TransparentFX
@@ -50,6 +53,9 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: ParallaxBackground
+    uniqueID: 410390069
+    locked: 0
   - name: Background
     uniqueID: 353082727
     locked: 0

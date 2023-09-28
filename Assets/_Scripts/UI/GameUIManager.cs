@@ -28,6 +28,10 @@ public class GameUIManager : MonoBehaviour
         settingsPanel.SetActive(false);
     }
 
+    public void GameSceneUnpause() {
+        MySceneManager.Instance.UnpauseGame();
+    }
+
     private void OnExitToMenuButtonClick() {
         MySceneManager.Instance.SwitchScene(SceneEnum.MainMenuScene);
     }
