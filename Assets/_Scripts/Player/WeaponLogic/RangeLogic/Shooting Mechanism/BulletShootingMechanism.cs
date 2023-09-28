@@ -23,8 +23,10 @@ public class BulletShootingMechanism : IShootingMechanism
             ShootBullet();
         }
 
-        weaponLogic.fireRateTimer = 0;
         weaponLogic.ammoUsage.OnShoot();
+        weaponLogic.fireRateTimer = 0;
+
+        SoundManager.Instance.PlaySound(weaponLogic.firingSound);
     }
 
     private void ShootBullet() {

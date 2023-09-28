@@ -42,6 +42,9 @@ public class WeaponDataSOEditor : Editor
     SerializedProperty overheatAmmoConfig;
     SerializedProperty unlimitedAmmoConfig;
 
+    SerializedProperty firingSound;
+    SerializedProperty reloadSound;
+
     SerializedProperty selfKnockback;
     SerializedProperty healAmount;
 
@@ -152,6 +155,10 @@ public class WeaponDataSOEditor : Editor
             EditorGUILayout.Separator();
         }
 
+        EditorGUILayout.PropertyField(firingSound, new GUIContent("Firing Sound", "The sound played when the weapon is fired"));
+        EditorGUILayout.PropertyField(reloadSound, new GUIContent("Reload Sound", "The sound played when the weapon is reloaded"));
+        EditorGUILayout.Separator();
+
         EditorGUILayout.PropertyField(selfKnockback, new GUIContent("Self Knockback", "The knockback force applied to self"));
         EditorGUILayout.PropertyField(healAmount, new GUIContent("Heal Amount", "The amount each fired bullet will heal for"));
         EditorGUILayout.Separator();
@@ -244,6 +251,9 @@ public class WeaponDataSOEditor : Editor
             beamRotationSpeed = serializedObject.FindProperty("beamRotationSpeed");
             limitRange = serializedObject.FindProperty("limitRange");
             singleTarget = serializedObject.FindProperty("singleTarget");
+
+            firingSound = serializedObject.FindProperty("firingSound");
+            reloadSound = serializedObject.FindProperty("reloadSound");
 
             selfKnockback = serializedObject.FindProperty("selfKnockback");
             healAmount = serializedObject.FindProperty("healAmount");

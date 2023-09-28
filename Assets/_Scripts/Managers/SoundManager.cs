@@ -62,6 +62,7 @@ public class SoundManager : MonoBehaviour
 
     #region AUDIO HANDLING
     public void PlaySound(AudioClip clip) {
+        if (clip == null) return;
         effectsSource.PlayOneShot(clip);
     }
 

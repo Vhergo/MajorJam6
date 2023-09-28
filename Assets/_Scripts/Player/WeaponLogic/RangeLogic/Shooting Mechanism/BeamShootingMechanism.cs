@@ -106,8 +106,12 @@ public class BeamShootingMechanism : IShootingMechanism
     }
 
     private void ConsumeAmmo() {
+        if (!weaponLogic.ammoUsage.CanShoot()) return;
+
         weaponLogic.ammoUsage.OnShoot();
         fireRateTimer = weaponLogic.fireRate;
+
+        SoundManager.Instance.PlaySound(weaponLogic.firingSound);
     }
 
     private void DealDamage() {

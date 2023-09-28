@@ -39,6 +39,9 @@ public class RangeWeaponDataSO : WeaponDataSO
     public bool limitRange;
     public bool singleTarget;
 
+    public AudioClip firingSound;
+    public AudioClip reloadSound;
+
     public float swapTime;
     public float selfKnockback;
     public float healAmount;
@@ -88,6 +91,9 @@ public class RangeWeaponDataSO : WeaponDataSO
         rangeWeaponLogic.ammoUsage = this.CreateAmmoData();
 
         rangeWeaponLogic.shootingMechanism = this.DefineShootingMechanism(rangeWeaponLogic);
+
+        rangeWeaponLogic.firingSound = this.firingSound;
+        rangeWeaponLogic.reloadSound = this.reloadSound;
 
         rangeWeaponLogic.swapTime = this.swapTime;
         rangeWeaponLogic.knockback = this.knockback;

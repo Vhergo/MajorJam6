@@ -50,9 +50,14 @@ MonoBehaviour:
   chargeAutoFire: 0
   chargeAutoFireDelay: 0
   beamRange: 0
-  beamSize: 0
+  beamDetectionRadius: 0
   activationDuration: 0
   deactivationDuration: 0
+  beamRotationSpeed: 0
+  limitRange: 0
+  singleTarget: 0
+  firingSound: {fileID: 8300000, guid: b727c2bcd19928b40a8801a16e989e7a, type: 3}
+  reloadSound: {fileID: 8300000, guid: b4d89c4de3a5d7149a828cbbc897c165, type: 3}
   swapTime: 0
   selfKnockback: 20
   healAmount: 0

@@ -20,8 +20,8 @@ MonoBehaviour:
   knockback: 5
   weaponPrefab: {fileID: 0}
   weaponStance: {fileID: 0}
-  rangeWeaponType: 5
   firingType: 2
+  rangeWeaponType: 5
   ammoUsageType: 0
   standardAmmoConfig:
     infiniteAmmo: 0
@@ -38,7 +38,7 @@ MonoBehaviour:
     lockoutTime: 0
     cooldownDelay: 0
     cooldownRate: 0
-  bulletSpeed: 60
+  bulletSpeed: 120
   fireRate: 2
   bulletSpread: 0
   bulletsPerShot: 1
@@ -49,6 +49,15 @@ MonoBehaviour:
   chargeTime: 1
   chargeAutoFire: 0
   chargeAutoFireDelay: 0
+  beamRange: 0
+  beamDetectionRadius: 0
+  activationDuration: 0
+  deactivationDuration: 0
+  beamRotationSpeed: 0
+  limitRange: 0
+  singleTarget: 0
+  firingSound: {fileID: 8300000, guid: a6deac16c1ca330489646fe7c702c0fd, type: 3}
+  reloadSound: {fileID: 8300000, guid: 548faf30820520e4fb6bd7eb4d028c08, type: 3}
   swapTime: 0
   selfKnockback: 5
   healAmount: 0

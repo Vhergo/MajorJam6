@@ -26,6 +26,7 @@ public class StandardAmmoData : IAmmoUsage
 
     public void OnShoot() {
         if (CanShoot()) {
+            // SHOT HERE
             currentAmmoInClip -= config.ammoConsumption;
             if (currentAmmoInClip <= 0 && config.autoReload) {
                 StartReload();

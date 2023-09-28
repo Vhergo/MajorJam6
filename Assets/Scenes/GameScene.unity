@@ -1716,10 +1716,10 @@ MonoBehaviour:
     weapon: {fileID: 11400000, guid: 566a31d40a3dd6442952ff7a589e2ed3, type: 2}
     swapKey: 50
   - weaponName: BRUH
-    weapon: {fileID: 11400000, guid: 10b20fb6bb499ab49a1c6a8f109065de, type: 2}
+    weapon: {fileID: 11400000, guid: c6a88c2ea3a39724dbb8aa60ce6f5614, type: 2}
     swapKey: 51
   - weaponName: Lazerator
-    weapon: {fileID: 11400000, guid: 10ca2af930605904eaf31e8d05c80553, type: 2}
+    weapon: {fileID: 11400000, guid: 829af8d32c1aa6f4ea92a30463c31bdb, type: 2}
     swapKey: 52
   fireKey: 316
   weaponSwapDelay: 0

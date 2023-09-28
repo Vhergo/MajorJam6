@@ -40,6 +40,9 @@ public class RangeWeaponLogic : WeaponLogic
 
     public IShootingMechanism shootingMechanism;
 
+    public AudioClip firingSound;
+    public AudioClip reloadSound;
+
     public float swapTime;
     public float selfKnockback;
     public float healAmount;
@@ -80,6 +83,7 @@ public class RangeWeaponLogic : WeaponLogic
         if (Input.GetKeyDown(KeyCode.R)) {
             if (ammoUsageType == AmmoUsageType.Standard && ammoUsage.CanReload()) {
                 ammoUsage.StartReload();
+                SoundManager.Instance.PlaySound(reloadSound);
             }
         }
         ammoUsage.OnUpdate();
