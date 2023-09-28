@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class MySceneManager : MonoBehaviour
 {
-    public static MySceneManager Instance;
+    public static MySceneManager Instance { get; private set; }
 
     [Header("Loading Screen")]
     [SerializeField] private GameObject loadingScreen;

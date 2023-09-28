@@ -53,6 +53,7 @@ MonoBehaviour:
   beamDetectionRadius: 0.1
   activationDuration: 0.05
   deactivationDuration: 0.05
+  beamRotationSpeed: 50
   limitRange: 1
   singleTarget: 0
   swapTime: 0

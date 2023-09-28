@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class MainMenuUIManager : MonoBehaviour
 {
-    public static MainMenuUIManager Instance;
+    public static MainMenuUIManager Instance { get; private set; }
 
     private void Awake() {
         if(Instance == null) {

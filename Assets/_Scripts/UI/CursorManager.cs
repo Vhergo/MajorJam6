@@ -1,54 +1,44 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
 public class CursorManager : MonoBehaviour
 {
     public static CursorManager Instance { get; private set; }
 
-    public Texture2D cursor;
+    public Texture2D cursorDefault;
     public Texture2D cursorEnemy;
     public Texture2D cursorUI;
-    private Texture2D currentCursor;
     private Vector2 cursorHotspot;
+    private bool isOverEnemy;
 
-    void Awake() {
+    private void Awake() {
         if (Instance == null) {
             Instance = this;
-        }else {
+            cursorHotspot = new Vector2(cursorDefault.width / 2, cursorDefault.height / 2);
+            Cursor.SetCursor(cursorDefault, cursorHotspot, CursorMode.Auto);
+        } else {
             Destroy(gameObject);
-            return;
         }
     }
 
-    void Start() { 
-        currentCursor = cursor;
-        cursorHotspot = new Vector2(currentCursor.width / 2, currentCursor.height / 2);
-        UpdateCursor();
+    public void OnPointerEnterUI() {
+        SetCursor(cursorUI);
     }
 
-    void Update() {
-        if (MySceneManager.Instance.currentScene == SceneEnum.MainMenuScene) return;
-
-        if (EventSystem.current.IsPointerOverGameObject()) {
-            CursorUIDetection(true);
-        }else {
-            CursorUIDetection(false);
-        }
+    public void OnPointerExitUI() {
+        SetCursor(cursorDefault);
     }
 
-    void UpdateCursor() {
-        Cursor.SetCursor(currentCursor, cursorHotspot, CursorMode.Auto);
+    public void OnPointerOverEnemy(bool onEnemy) {
+        isOverEnemy = onEnemy ? true : false;
+        SetCursor(onEnemy ? cursorEnemy : cursorDefault);
     }
 
-    public void CursorEnemyDetection(bool onEnemy) {
-        currentCursor = onEnemy ? cursorEnemy : cursor;
-        UpdateCursor();
-    }
-
-    public void CursorUIDetection(bool onUI) {
-        currentCursor = onUI ? cursorUI : cursor;
-        UpdateCursor();
+    private void SetCursor(Texture2D cursorTexture) {
+        Cursor.SetCursor(cursorTexture, cursorHotspot, CursorMode.Auto);
     }
 }

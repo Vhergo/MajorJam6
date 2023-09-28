@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 public class Parallax : MonoBehaviour
 {
-    public static Parallax Instance;
+    public static Parallax Instance { get; private set; }
 
     [SerializeField] private BackgroundLayer[] backgroundLayers;
     [SerializeField] private bool disableParallax;

@@ -15,14 +15,14 @@ GameObject:
   - component: {fileID: 8895669716191894549}
   - component: {fileID: -6832671877636585939}
   - component: {fileID: 3510154608047704063}
-  - component: {fileID: 5663495587330699897}
+  - component: {fileID: 2427410169050060204}
   m_Layer: 0
   m_Name: Sentinel
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &41372996466242553
 Transform:
   m_ObjectHideFlags: 0
@@ -220,7 +220,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37b614881ff82a84eb588115ef58b529, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &5663495587330699897
+--- !u!114 &2427410169050060204
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

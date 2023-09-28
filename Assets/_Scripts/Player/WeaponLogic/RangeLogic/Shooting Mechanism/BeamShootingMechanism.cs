@@ -158,7 +158,6 @@ public class BeamShootingMechanism : IShootingMechanism
             }
             return hit.point;
         } else {
-            Debug.Log("NO COLLISION");
             if (weaponLogic.limitRange) {
                 // Distance optimization
                 // float distance = Vector2.Distance(GetBeamStartPoint(), Camera.main.ScreenToWorldPoint(Input.mousePosition));

@@ -19,6 +19,7 @@ TagManager:
   - Settings
   - Sliders
   - Audio Toggles
+  - BackgroundUI
   layers:
   - Default
   - TransparentFX
