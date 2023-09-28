@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class RotateWithMouse : MonoBehaviour
 {
-    [SerializeField] private float rotationSpeed;
+    public static RotateWithMouse Instance;
+
+    [SerializeField] private float originalRotationSpeed;
     [SerializeField] private bool stopRotation;
     [SerializeField] private float equipOffset;
     private Vector3 objectPosition;
@@ -12,15 +14,27 @@ public class RotateWithMouse : MonoBehaviour
     private Vector2 objectDirection;
     private Transform player;
 
+    public float rotationSpeed;
+
     // Objects To Flip
     private SpriteRenderer playerSprite;
     private SpriteRenderer weaponSprite;
     [SerializeField] private SpriteRenderer muzzleFlashSprite;
 
+    private void Awake() {
+        if (Instance == null) {
+            Instance = this;
+        }else {
+            Destroy(gameObject);
+        }
+    }
+
     void Start() {
         player = GameObject.Find("Player").transform;
         playerSprite = GameObject.Find("PlayerSprite").GetComponent<SpriteRenderer>();
         weaponSprite = GameObject.Find("WeaponSprite").GetComponent<SpriteRenderer>();
+
+        rotationSpeed = originalRotationSpeed;
     }
 
     void Update() {
@@ -58,5 +72,9 @@ public class RotateWithMouse : MonoBehaviour
 
     Vector3 GetEquipPosition(float offset = 0) {
         return new Vector3 (player.position.x + offset, player.position.y, 0f);
+    }
+
+    public void ResetRotationSpeed() {
+        rotationSpeed = originalRotationSpeed;
     }
 }

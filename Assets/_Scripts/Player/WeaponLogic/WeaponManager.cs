@@ -43,6 +43,7 @@ public class WeaponManager : MonoBehaviour
                 // We don't need to do anything if we are attempting to swap TO the currently equiped weapon
                 if (weaponsList[i].swapKey == currentWeapon.swapKey) return;
 
+                RotateWithMouse.Instance.ResetRotationSpeed();
                 SaveCurrentWeaponData();
                 EquipWeapon(weaponsList[i]);
                 StartCoroutine(WeaponSwapCooldown());
@@ -102,6 +103,7 @@ public class WeaponManager : MonoBehaviour
 [Serializable]
 public class Weapon
 {
+    public string weaponName;
     public WeaponDataSO weapon;
     public KeyCode swapKey;
     public IAmmoUsage ammoData;

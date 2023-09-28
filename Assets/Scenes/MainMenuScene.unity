@@ -802,7 +802,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1838337455}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ed7ba0649939724e884da009d1240f8, type: 3}
+  m_Script: {fileID: 11500000, guid: e1abd992d5eea564c822da3d2479d702, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   cursor: {fileID: 2800000, guid: 89b074c09bd45304fa24ccb81c23bdde, type: 3}
@@ -1014,7 +1014,8 @@ PrefabInstance:
       propertyPath: m_AnchorMin.x
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5527887453913795417, guid: 36f71769598f0d44da80c197a515b50e, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []

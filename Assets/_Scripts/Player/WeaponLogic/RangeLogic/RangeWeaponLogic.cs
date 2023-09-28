@@ -31,6 +31,7 @@ public class RangeWeaponLogic : WeaponLogic
     public float beamDetectionRadius;
     public float activationDuration;
     public float deactivationDuration;
+    public float beamRotationSpeed;
     public bool limitRange;
     public bool singleTarget;
 

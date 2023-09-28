@@ -112,7 +112,6 @@ public class JuggernautAI : Enemy
     }
 
     bool PlayerIsDead() {
-        
         return target.GetComponent<Player>().CurrentHealth <= 0;
     }
 

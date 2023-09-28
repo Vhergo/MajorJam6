@@ -34,6 +34,7 @@ public class WeaponDataSOEditor : Editor
     SerializedProperty beamDetectionRadius;
     SerializedProperty activationDuration;
     SerializedProperty deactivationDuration;
+    SerializedProperty beamRotationSpeed;
     SerializedProperty limitRange;
     SerializedProperty singleTarget;
 
@@ -144,6 +145,7 @@ public class WeaponDataSOEditor : Editor
                 EditorGUILayout.PropertyField(beamDetectionRadius, new GUIContent("Beam Size", "The detection radius at the end of the beam"));
                 EditorGUILayout.PropertyField(activationDuration, new GUIContent("Activation Duration", "The duration of all beam activation logic and animations"));
                 EditorGUILayout.PropertyField(deactivationDuration, new GUIContent("Deactivation Duration", "The duration of all beam deactivation logic and animations"));
+                EditorGUILayout.PropertyField(beamRotationSpeed, new GUIContent("Beam Rotation Speed", "The speed at which the beam rotates towards the mouse position"));
                 EditorGUILayout.PropertyField(limitRange, new GUIContent("Limit Range", "If true and mouse is within beam range, the beam will end at the mouse position. Otherwise, the beam will end at the maximum range"));
                 EditorGUILayout.PropertyField(singleTarget, new GUIContent("Single Target", "If true, beam will only affect a single target at a time. Target priority will be based off of proximity to the cursor"));
             }
@@ -239,6 +241,7 @@ public class WeaponDataSOEditor : Editor
             beamDetectionRadius = serializedObject.FindProperty("beamDetectionRadius");
             activationDuration = serializedObject.FindProperty("activationDuration");
             deactivationDuration = serializedObject.FindProperty("deactivationDuration");
+            beamRotationSpeed = serializedObject.FindProperty("beamRotationSpeed");
             limitRange = serializedObject.FindProperty("limitRange");
             singleTarget = serializedObject.FindProperty("singleTarget");
 

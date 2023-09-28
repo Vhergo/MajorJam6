@@ -35,6 +35,7 @@ public class RangeWeaponDataSO : WeaponDataSO
     public float beamDetectionRadius;
     public float activationDuration;
     public float deactivationDuration;
+    public float beamRotationSpeed;
     public bool limitRange;
     public bool singleTarget;
 
@@ -79,6 +80,7 @@ public class RangeWeaponDataSO : WeaponDataSO
         rangeWeaponLogic.beamDetectionRadius = this.beamDetectionRadius;
         rangeWeaponLogic.activationDuration = this.activationDuration;
         rangeWeaponLogic.deactivationDuration = this.deactivationDuration;
+        rangeWeaponLogic.beamRotationSpeed = this.beamRotationSpeed;
         rangeWeaponLogic.limitRange = this.limitRange;
         rangeWeaponLogic.singleTarget = this.singleTarget;
 
@@ -118,10 +120,15 @@ public class RangeWeaponDataSO : WeaponDataSO
 
     public IShootingMechanism DefineShootingMechanism(RangeWeaponLogic rangeWeaponLogic) {
         if (firingType == RangeFiringType.Beam) {
+            SetBeamRotationSpeed();
             return new BeamShootingMechanism(rangeWeaponLogic);
         } else {
             return new BulletShootingMechanism(rangeWeaponLogic);
         }
+    }
+
+    private void SetBeamRotationSpeed() {
+        RotateWithMouse.Instance.rotationSpeed = beamRotationSpeed;
     }
 
     // OnValidate is called when the script is loaded or a value is changed in the inspector

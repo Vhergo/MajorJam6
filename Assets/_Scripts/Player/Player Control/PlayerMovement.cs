@@ -32,18 +32,18 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float wallDetectionRadius = 0.2f;
 
     [Header("Movement")]
-    [SerializeField] private float maxSpeed;
-    [SerializeField] private float acceleration;
-    [SerializeField] private float decceleration;
+    [SerializeField] private float maxSpeed = 20f;
+    [SerializeField] private float acceleration = 5f;
+    [SerializeField] private float decceleration = 5f;
     [SerializeField] private bool conserveMomentum;
     private float originalMaxSpeed;
     private float accelForce;
     private float deccelForce;
     
     // In-air speed control
-    [Range(0.01f, 1)] [SerializeField] private float accelInAir;
-    [Range(0.01f, 1)] [SerializeField] private float deccelInAir;
-    [SerializeField] private float airTime;
+    [Range(0.01f, 1)] [SerializeField] private float accelInAir = 1f;
+    [Range(0.01f, 1)] [SerializeField] private float deccelInAir = 1f;
+    [SerializeField] private float airTime = 0.1f;
     private float airTimeCounter;
 
     // Facing direction
@@ -55,20 +55,20 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Jump")]
     [SerializeField] private float jumpForce;
-    [SerializeField] private float jumpHeight;
-    [SerializeField] private float jumpTimeToApex;
+    [SerializeField] private float jumpHeight = 6f;
+    [SerializeField] private float jumpTimeToApex = 0.25f;
 
-    [Range(0, 1)] [SerializeField] private float lowJumpMult; // percentage decrease
-    [Range(0, 1)] [SerializeField] private float fallGravityMult; // percentage increase
+    [Range(0, 1)] [SerializeField] private float lowJumpMult = 0.55f; // percentage decrease
+    [Range(0, 1)] [SerializeField] private float fallGravityMult = 0.2f; // percentage increase
     [SerializeField] private bool isJumping;
 
     [SerializeField] private float gravityStrength;
     [SerializeField] private float gravityScale;
-    [SerializeField] private float maxFallSpeed;
+    [SerializeField] private float maxFallSpeed = 50f;
 
-    [SerializeField] private int jumpLimit;
-    [SerializeField] private float coyoteTime;
-    [SerializeField] private float jumpBufferTime;
+    [SerializeField] private int jumpLimit = 1;
+    [SerializeField] private float coyoteTime = 0.2f;
+    [SerializeField] private float jumpBufferTime = 0.2f;
     private float tempJumpLimit;
     private float jumpCounter;
     private float coyoteTimeCounter = 0;
@@ -77,17 +77,17 @@ public class PlayerMovement : MonoBehaviour
     private bool isFalling;
 
     [Header("Crouch")]
-    [SerializeField] private float crouchSpeed;
-    [Range(0, 1)] [SerializeField] private float crouchScaleAmount;
+    [SerializeField] private float crouchSpeed = 7f;
+    [Range(0, 1)] [SerializeField] private float crouchScaleAmount = 0.6f;
     private Vector3 originalCrouchScale;
     private Vector3 newCrouchScale;
     private bool crouchInput;
     public bool isCrouching = false;
 
     [Header("Dash")]
-    [SerializeField] private float dashForce;
-    [SerializeField] private float dashTime;
-    [SerializeField] private float dashCooldown;
+    [SerializeField] private float dashForce = 4f;
+    [SerializeField] private float dashTime = 0.08f;
+    [SerializeField] private float dashCooldown = 0.5f;
 
     [SerializeField] private Vector2 dashDir;
     [SerializeField] private bool canDash = true;
@@ -97,27 +97,27 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Wall Grab/Slide/Climb/Jump")]
     //Wall Grab
-    [SerializeField] private float wallGrabTime;
+    [SerializeField] private float wallGrabTime = 4f;
     [SerializeField] private bool wallGrabInput = false;
     [SerializeField] private bool isWallGrabing = false;
     private float wallGrabCounter;
     private float tempWallGrabTime;
 
     //Wall Slide
-    [SerializeField] private float wallSlideSpeed;
+    [SerializeField] private float wallSlideSpeed = 6f;
     [SerializeField] private bool wallSlideInput;
     [SerializeField] private bool isWallSliding = false;
 
     //Wall Climb
-    [SerializeField] private float wallClimbSpeed;
-    [SerializeField] private float wallClimbStaminaDrain;
+    [SerializeField] private float wallClimbSpeed = 6f;
+    [SerializeField] private float wallClimbStaminaDrain = 1f;
     [SerializeField] private bool wallClimbInput = false;
     [SerializeField] private bool isWallClimbing = false;
     public float wallClimbDirection;
 
     //Wall Jump
-    [SerializeField] private float wallJumpTime;
-    [SerializeField] private float wallJumpDuration;
+    [SerializeField] private float wallJumpTime = 0.2f;
+    [SerializeField] private float wallJumpDuration = 0.1f;
     [SerializeField] private Vector2 wallJumpForce;
     private float wallJumpCounter;
     private float wallJumpDirection;
@@ -405,7 +405,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Turn() {
         if (isDashing) return;
-        
+        if (MySceneManager.Instance.gameState == GameState.Pause) return;
         // if (isMovingRight != isFacingRight) {
         //     isFacingRight = !isFacingRight;
         //     transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);

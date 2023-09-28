@@ -12,9 +12,10 @@ public class BeamShootingMechanism : IShootingMechanism
     private Coroutine deactivationCoroutine;
 
     private float beamProgress;
+    private Vector2 endPoint;
+
     private LayerMask layerMask;
     private float fireRateTimer;
-    private Vector2 endPoint;
 
     public BeamShootingMechanism(RangeWeaponLogic logic) {
         weaponLogic = logic;
@@ -149,23 +150,29 @@ public class BeamShootingMechanism : IShootingMechanism
         Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         if (hit.collider != null) {
             if (weaponLogic.limitRange) {
-                float squaredDistance = ((Vector2)GetBeamStartPoint() - mousePos).sqrMagnitude;
-                if (squaredDistance < (hit.distance * hit.distance)) {
+                float distanceToMouse = ((Vector2)GetBeamStartPoint() - mousePos).sqrMagnitude;
+                if (distanceToMouse < (hit.distance * hit.distance)) {
                     return mousePos;
                 }
                 return hit.point;
             }
             return hit.point;
         } else {
+            Debug.Log("NO COLLISION");
             if (weaponLogic.limitRange) {
                 // Distance optimization
                 // float distance = Vector2.Distance(GetBeamStartPoint(), Camera.main.ScreenToWorldPoint(Input.mousePosition));
                 // Need to typecast both to Vector2 to use sqrMagnitude in a 2D context. Otherwise the Z axis will skew the results
-                float squaredDistance = ((Vector2)GetBeamStartPoint() - mousePos).sqrMagnitude;
-                if (squaredDistance < (weaponLogic.beamRange * weaponLogic.beamRange))
+                float distanceToMouse = ((Vector2)GetBeamStartPoint() - mousePos).sqrMagnitude;
+                if (distanceToMouse < (weaponLogic.beamRange * weaponLogic.beamRange)) {
+                    float distanceToBeamEnd = (GetBeamStartPoint() - (GetCurrentBeamEndPoint(range))).sqrMagnitude;
+                    if (distanceToBeamEnd < distanceToMouse) {
+                        return GetCurrentBeamEndPoint(range);
+                    }
                     return mousePos;
+                }
             }
-            return GetBeamStartPoint() + weaponLogic.firePoint.right * range;
+            return GetCurrentBeamEndPoint(range);
         }
     }
 
@@ -176,8 +183,12 @@ public class BeamShootingMechanism : IShootingMechanism
         return ~layerMask;
     }
 
-    private Vector3 GetBeamStartPoint() {
+    private Vector2 GetBeamStartPoint() {
         return weaponLogic.firePoint.position;
+    }
+
+    private Vector2 GetCurrentBeamEndPoint(float range) {
+        return GetBeamStartPoint() + (Vector2)weaponLogic.firePoint.right * range;
     }
 
     private void UpdateBeamEndPosition() {
