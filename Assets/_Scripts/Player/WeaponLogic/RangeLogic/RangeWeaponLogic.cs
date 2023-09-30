@@ -80,12 +80,6 @@ public class RangeWeaponLogic : WeaponLogic
         ammoLeftInClip = ammoUsage.GetAmmoRemainingInClip();
         ammoLeftInTotal = ammoUsage.GetAmmoRemainingInTotal();
 
-        if (Input.GetKeyDown(KeyCode.R)) {
-            if (ammoUsageType == AmmoUsageType.Standard && ammoUsage.CanReload()) {
-                ammoUsage.StartReload();
-                SoundManager.Instance.PlaySound(reloadSound);
-            }
-        }
         ammoUsage.OnUpdate();
     }
 

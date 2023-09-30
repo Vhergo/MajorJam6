@@ -18,6 +18,9 @@ public class SoundManager : MonoBehaviour
     [SerializeField] private AudioClip mainMenuMusic;
     [SerializeField] private AudioClip inGameMusic;
 
+    [Header("Effects")]
+    [SerializeField] private Vector2 pitchRange = new Vector2(0.5f, 1.5f);
+
     private Slider masterSlider;
     private Slider musicSlider;
     private Slider effectsSlider;
@@ -67,6 +70,9 @@ public class SoundManager : MonoBehaviour
     #region AUDIO HANDLING
     public void PlaySound(AudioClip clip) {
         if (clip == null) return;
+        // Adjusting pitch like this is a very simple way to make the sound feel more dynamic
+        // It comes at the cost of all sound being adjusted but it should be enough for now
+        effectsSource.pitch = Random.Range(pitchRange.x, pitchRange.y);
         effectsSource.PlayOneShot(clip);
     }
 

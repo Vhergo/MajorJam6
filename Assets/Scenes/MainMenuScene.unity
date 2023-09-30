@@ -634,6 +634,7 @@ MonoBehaviour:
   interfaceSource: {fileID: 1743713724}
   mainMenuMusic: {fileID: 8300000, guid: 68e4bc2623b6ddd46af10caa0b384433, type: 3}
   inGameMusic: {fileID: 8300000, guid: bed7a10f43423f94e865e6f0e75a1cfa, type: 3}
+  pitchRange: {x: 0.85, y: 1.15}
 --- !u!4 &1353709093
 Transform:
   m_ObjectHideFlags: 0

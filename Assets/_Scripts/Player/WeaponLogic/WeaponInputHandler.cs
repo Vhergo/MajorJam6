@@ -4,7 +4,6 @@ using UnityEngine;
 public class WeaponInputHandler : MonoBehaviour
 {
     private WeaponLogic currentWeaponLogic;
-    private Coroutine beamCoroutine;
 
     private void OnEnable() {
         WeaponManager.OnWeaponEquipped += UpdateWeaponLogic;
@@ -26,23 +25,43 @@ public class WeaponInputHandler : MonoBehaviour
         if (MySceneManager.Instance.gameState == GameState.Pause) return;
 
         if (currentWeaponLogic is RangeWeaponLogic rangeWeaponLogic) {
-            switch (rangeWeaponLogic.weaponData.firingType) {
-                case RangeFiringType.SemiAuto:
-                    TapFireInput(rangeWeaponLogic);
-                    break;
-                case RangeFiringType.FullAuto:
-                    HoldFireInput(rangeWeaponLogic);
-                    break;
-                case RangeFiringType.Charge:
-                    ChargeFireInput(rangeWeaponLogic);
-                    break;
-                case RangeFiringType.Beam:
-                    BeamFireInput(rangeWeaponLogic);
-                    break;
-            }
+            ChooseRangeInputType(rangeWeaponLogic);
+            HandleWeaponActions(rangeWeaponLogic);
         } else if (currentWeaponLogic is MeleeWeaponLogic meleeWeaponLogic) {
             // Similar structure for melee input handling
+            ChooseMeleeInputType(meleeWeaponLogic);
         }
+    }
+
+    private void HandleWeaponActions(RangeWeaponLogic rangeWeaponLogic) {
+        // RELOAD
+        if (Input.GetKeyDown(KeyCode.R)) {
+            if (rangeWeaponLogic.ammoUsageType == AmmoUsageType.Standard && rangeWeaponLogic.ammoUsage.CanReload()) {
+                rangeWeaponLogic.ammoUsage.StartReload();
+                SoundManager.Instance.PlaySound(rangeWeaponLogic.reloadSound);
+            }
+        }
+    }
+
+    private void ChooseRangeInputType(RangeWeaponLogic rangeWeaponLogic) {
+        switch (rangeWeaponLogic.weaponData.firingType) {
+            case RangeFiringType.SemiAuto:
+                TapFireInput(rangeWeaponLogic);
+                break;
+            case RangeFiringType.FullAuto:
+                HoldFireInput(rangeWeaponLogic);
+                break;
+            case RangeFiringType.Charge:
+                ChargeFireInput(rangeWeaponLogic);
+                break;
+            case RangeFiringType.Beam:
+                BeamFireInput(rangeWeaponLogic);
+                break;
+        }
+    }
+
+    private void ChooseMeleeInputType(MeleeWeaponLogic meleeWeaponLogic) {
+
     }
 
     protected void TapFireInput(RangeWeaponLogic weaponLogic) {

@@ -126,15 +126,10 @@ public class RangeWeaponDataSO : WeaponDataSO
 
     public IShootingMechanism DefineShootingMechanism(RangeWeaponLogic rangeWeaponLogic) {
         if (firingType == RangeFiringType.Beam) {
-            SetBeamRotationSpeed();
             return new BeamShootingMechanism(rangeWeaponLogic);
         } else {
             return new BulletShootingMechanism(rangeWeaponLogic);
         }
-    }
-
-    private void SetBeamRotationSpeed() {
-        RotateWithMouse.Instance.rotationSpeed = beamRotationSpeed;
     }
 
     // OnValidate is called when the script is loaded or a value is changed in the inspector

@@ -53,9 +53,11 @@ MonoBehaviour:
   beamDetectionRadius: 0.1
   activationDuration: 0.05
   deactivationDuration: 0.05
-  beamRotationSpeed: 50
+  beamRotationSpeed: 5
   limitRange: 1
   singleTarget: 0
+  firingSound: {fileID: 0}
+  reloadSound: {fileID: 0}
   swapTime: 0
   selfKnockback: 0
   healAmount: 0

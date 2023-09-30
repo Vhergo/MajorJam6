@@ -21,7 +21,7 @@ public class WeaponManager : MonoBehaviour
 
     public static Action<WeaponLogic> OnWeaponEquipped;
 
-    private void Start() {
+    void Start() {
         // Temporary failsafe for Unity Bug
         // This bug registers the Mouse0 keycode as the Print keycode if it is assigned in the inspector
         // If that bug occurs, this manual assignement of Mouse0 will handle it
@@ -33,6 +33,7 @@ public class WeaponManager : MonoBehaviour
 
     void Update() {
         HandleWeaponSwapInput();
+        HandleWeaponUnequip();
     }
 
     void HandleWeaponSwapInput() {
@@ -40,7 +41,6 @@ public class WeaponManager : MonoBehaviour
 
         for (int i = 0; i < weaponsList.Count; i++) {
             if (Input.GetKeyDown(weaponsList[i].swapKey)) {
-                // We don't need to do anything if we are attempting to swap TO the currently equiped weapon
                 if (weaponsList[i].swapKey == currentWeapon.swapKey) return;
 
                 RotateWithMouse.Instance.ResetRotationSpeed();
@@ -48,6 +48,14 @@ public class WeaponManager : MonoBehaviour
                 EquipWeapon(weaponsList[i]);
                 StartCoroutine(WeaponSwapCooldown());
             }
+        }
+    }
+
+    void HandleWeaponUnequip() {
+        if (Input.GetKeyDown(KeyCode.X)) {
+            RotateWithMouse.Instance.ResetRotationSpeed();
+            SaveCurrentWeaponData();
+            UnequipWeapon();
         }
     }
 
@@ -69,10 +77,21 @@ public class WeaponManager : MonoBehaviour
         if (weapon.ammoData != null)
             currentWeaponLogic.InitializeSavedData(weapon.ammoData);
 
-        OnWeaponEquipped.Invoke(currentWeaponLogic);
+        HanleOnWeaponEquppedInvoke();
     }
 
-    void RemoveWeaponLogic() {
+    private void UnequipWeapon() {
+
+    }
+
+    private void HanleOnWeaponEquppedInvoke() {
+        if (currentWeaponData.weaponCategory == WeaponCategory.Melee)
+            OnWeaponEquipped.Invoke(currentWeaponLogic as MeleeWeaponLogic);
+        else if (currentWeaponData.weaponCategory == WeaponCategory.Range)
+            OnWeaponEquipped.Invoke(currentWeaponLogic as RangeWeaponLogic);
+    }
+
+    private void RemoveWeaponLogic() {
         WeaponLogic[] currentLogic = GetComponents<WeaponLogic>();
         if (currentLogic != null) {
             foreach (WeaponLogic logicComponent in currentLogic) {

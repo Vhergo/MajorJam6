@@ -33,6 +33,7 @@ public class BeamShootingMechanism : IShootingMechanism
 
     private IEnumerator HandleBeam() {
         weaponLogic.beamRenderer.enabled = true;
+        SetBeamRotationSpeed();
 
         float startTime = Time.time;
         inputReleased = false;
@@ -90,6 +91,7 @@ public class BeamShootingMechanism : IShootingMechanism
         }
 
         weaponLogic.beamRenderer.enabled = false;
+        ResetBeamRotationSpeed();
     }
 
     private void BeamMaintain() {
@@ -156,7 +158,7 @@ public class BeamShootingMechanism : IShootingMechanism
             if (weaponLogic.limitRange) {
                 float distanceToMouse = ((Vector2)GetBeamStartPoint() - mousePos).sqrMagnitude;
                 if (distanceToMouse < (hit.distance * hit.distance)) {
-                    return mousePos;
+                    return GetMouseEndPoint(distanceToMouse);
                 }
                 return hit.point;
             }
@@ -172,7 +174,7 @@ public class BeamShootingMechanism : IShootingMechanism
                     if (distanceToBeamEnd < distanceToMouse) {
                         return GetCurrentBeamEndPoint(range);
                     }
-                    return mousePos;
+                    return GetMouseEndPoint(distanceToMouse);
                 }
             }
             return GetCurrentBeamEndPoint(range);
@@ -194,9 +196,21 @@ public class BeamShootingMechanism : IShootingMechanism
         return GetBeamStartPoint() + (Vector2)weaponLogic.firePoint.right * range;
     }
 
+    private Vector2 GetMouseEndPoint(float distanceToMouse) {
+        return GetBeamStartPoint() + (Vector2)weaponLogic.firePoint.right * Mathf.Sqrt(distanceToMouse);
+    }
+
     private void UpdateBeamEndPosition() {
         weaponLogic.beamRenderer.SetPosition(0, GetBeamStartPoint());
         weaponLogic.beamRenderer.SetPosition(1, endPoint);
+    }
+
+    private void SetBeamRotationSpeed() {
+        RotateWithMouse.Instance.rotationSpeed = weaponLogic.beamRotationSpeed;
+    }
+
+    private void ResetBeamRotationSpeed() {
+        RotateWithMouse.Instance.ResetRotationSpeed();
     }
 
     public void StopShoot() {
