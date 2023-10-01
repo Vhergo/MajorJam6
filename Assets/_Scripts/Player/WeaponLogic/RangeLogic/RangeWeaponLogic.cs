@@ -89,6 +89,10 @@ public class RangeWeaponLogic : WeaponLogic
     }
 
     public override IAmmoUsage GetMutableData() {
+        // Reload when you swap
+        //if (ammoUsageType == AmmoUsageType.Standard && ammoUsage.CanReload())
+        //    ammoUsage.StartReload();
+
         ammoUsage.SaveTimeAtWeaponSwap();
         return ammoUsage;
     }

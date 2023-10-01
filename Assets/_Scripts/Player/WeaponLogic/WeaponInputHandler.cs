@@ -14,6 +14,7 @@ public class WeaponInputHandler : MonoBehaviour
     }
 
     private void Update() {
+        if (!WeaponManager.Instance.weaponIsEquipped) return;
         HandleInput();
     }
 

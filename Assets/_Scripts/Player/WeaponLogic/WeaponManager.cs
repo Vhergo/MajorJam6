@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class WeaponManager : MonoBehaviour
 {
+    public static WeaponManager Instance { get; private set; }
+
     [Header("Weapons")]
     [SerializeField] private List<Weapon> weaponsList = new List<Weapon>();
 
@@ -15,11 +17,26 @@ public class WeaponManager : MonoBehaviour
     [SerializeField] private float weaponSwapDelay;
     private bool canSwap = true;
 
+    public GameObject weaponObject;
+    public bool weaponIsEquipped;
+
     private Weapon currentWeapon;
     private WeaponDataSO currentWeaponData;
     private WeaponLogic currentWeaponLogic;
 
     public static Action<WeaponLogic> OnWeaponEquipped;
+
+    private void Awake() {
+        if (Instance == null) {
+            Instance = this;
+        }else {
+            Destroy(gameObject);
+        }
+
+        weaponObject = GameObject.FindGameObjectWithTag("Weapon");
+        Debug.Log(weaponObject.name);
+        weaponIsEquipped = true;
+    }
 
     void Start() {
         // Temporary failsafe for Unity Bug
@@ -32,18 +49,16 @@ public class WeaponManager : MonoBehaviour
     }
 
     void Update() {
+        if (!canSwap) return;
         HandleWeaponSwapInput();
-        HandleWeaponUnequip();
+        HandleWeaponHolster();
     }
 
     void HandleWeaponSwapInput() {
-        if (!canSwap) return;
-
         for (int i = 0; i < weaponsList.Count; i++) {
             if (Input.GetKeyDown(weaponsList[i].swapKey)) {
                 if (weaponsList[i].swapKey == currentWeapon.swapKey) return;
 
-                RotateWithMouse.Instance.ResetRotationSpeed();
                 SaveCurrentWeaponData();
                 EquipWeapon(weaponsList[i]);
                 StartCoroutine(WeaponSwapCooldown());
@@ -51,15 +66,28 @@ public class WeaponManager : MonoBehaviour
         }
     }
 
-    void HandleWeaponUnequip() {
+    void HandleWeaponHolster() {
         if (Input.GetKeyDown(KeyCode.X)) {
-            RotateWithMouse.Instance.ResetRotationSpeed();
-            SaveCurrentWeaponData();
-            UnequipWeapon();
+            if (weaponIsEquipped) {
+                // Unequip current weapon
+                Debug.Log("Unequip");
+                weaponObject.SetActive(false);
+                weaponIsEquipped = false;
+            } else {
+                // Equip current weapon
+                Debug.Log("Equip");
+                weaponObject.SetActive(true);
+                weaponIsEquipped = true;
+            }
         }
     }
 
     void EquipWeapon(Weapon weapon) {
+        if (!weaponObject.activeInHierarchy) {
+            weaponObject.SetActive(true);
+            weaponIsEquipped = true;
+        }
+
         if (weapon == null) {
             print("No Weapon Available");
             return;
@@ -78,10 +106,6 @@ public class WeaponManager : MonoBehaviour
             currentWeaponLogic.InitializeSavedData(weapon.ammoData);
 
         HanleOnWeaponEquppedInvoke();
-    }
-
-    private void UnequipWeapon() {
-
     }
 
     private void HanleOnWeaponEquppedInvoke() {
@@ -107,6 +131,7 @@ public class WeaponManager : MonoBehaviour
     //}
 
     private void SaveCurrentWeaponData() {
+        RotateWithMouse.Instance.ResetRotationSpeed();
         if (currentWeapon != null && currentWeaponLogic != null) {
             currentWeapon.ammoData = currentWeaponLogic.GetMutableData();
         }
